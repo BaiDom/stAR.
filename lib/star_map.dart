@@ -24,79 +24,82 @@ class _StarPageState extends State<StarPage> {
           icon: Icon(Icons.arrow_back_outlined),
         ),
       ),
-      body: Column(
-        children: [
-          Image.asset('images/stars.png'),
-          const SizedBox(
-            height: 5,
-          ),
-          const Divider(
-            color: Colors.black,
-          ),
-          Container(
-            margin: const EdgeInsets.fromLTRB(100, 10, 100, 10),
-            padding: const EdgeInsets.all(10.0),
-            color: Colors.amber,
-            width: double.infinity,
-            child: const Center(
-              child: Text(
-                'my stars',
-                style: TextStyle(
-                  color: Colors.white,
+      body: SingleChildScrollView(
+        child: Column(
+          
+          children: [
+            Image.asset('images/stars.png'),
+            const SizedBox(
+              height: 5,
+            ),
+            const Divider(
+              color: Colors.black,
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(100, 10, 100, 10),
+              padding: const EdgeInsets.all(10.0),
+              color: Colors.amber,
+              width: double.infinity,
+              child: const Center(
+                child: Text(
+                  'my stars',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              debugPrint('Elevated Button');
-            },
-            child: Text('Save Stars'),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: isSwitch ? Colors.amber : Colors.white,
+            ElevatedButton(
+              onPressed: () {
+                debugPrint('Elevated Button');
+              },
+              child: Text('Save Stars'),
             ),
-            onPressed: () {
-              debugPrint('Elevated Button');
-            },
-            child: Text('Inverted Stars'),
-          ),
-          OutlinedButton(
-            onPressed: () {
-              debugPrint('Outlined Button');
-            },
-            child: Text('Share Stars'),
-          ),
-          GestureDetector(
-            onTap: () {
-              debugPrint('gesture detector = row');
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
-                Icon(Icons.star, color: Colors.amber),
-                Text('see the moon'),
-                Icon(Icons.bedtime, color: Colors.amber),
-              ],
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: isSwitch ? Colors.amber : Colors.white,
+              ),
+              onPressed: () {
+                debugPrint('Elevated Button');
+              },
+              child: Text('Inverted Stars'),
             ),
-          ),
-          Switch(
-              value: isSwitch,
-              onChanged: (bool newBool) {
+            OutlinedButton(
+              onPressed: () {
+                debugPrint('Outlined Button');
+              },
+              child: Text('Share Stars'),
+            ),
+            GestureDetector(
+              onTap: () {
+                debugPrint('gesture detector = row');
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const [
+                  Icon(Icons.star, color: Colors.amber),
+                  Text('see the moon'),
+                  Icon(Icons.bedtime, color: Colors.amber),
+                ],
+              ),
+            ),
+            Switch(
+                value: isSwitch,
+                onChanged: (bool newBool) {
+                  setState(() {
+                    isSwitch = newBool;
+                  });
+                }),
+            Checkbox(
+              value: isCheckBox,
+              onChanged: (bool? newBool) {
                 setState(() {
-                  isSwitch = newBool;
+                  isCheckBox = newBool;
                 });
-              }),
-          Checkbox(
-            value: isCheckBox,
-            onChanged: (bool? newBool) {
-              setState(() {
-                isCheckBox = newBool;
-              });
-            },
-          ),
-        ],
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
