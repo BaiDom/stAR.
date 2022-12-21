@@ -13,7 +13,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.amber),
+      theme: ThemeData(
+          primarySwatch: Colors.amber,
+          scaffoldBackgroundColor: Colors.black,
+          textTheme: (TextTheme(bodyText2: TextStyle(color: Colors.white)))),
       home: const RootPage(),
     );
   }
@@ -38,7 +41,16 @@ class _RootPageState extends State<RootPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('stAR'),
+        title: Center(
+          child: FittedBox(
+            fit: BoxFit.cover,
+            child: Text('stAR.',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: "MartianMono",
+                    fontWeight: FontWeight.bold)),
+          ),
+        ),
       ),
       body: pages[currentPage],
       floatingActionButton: FloatingActionButton(
@@ -72,4 +84,3 @@ class _RootPageState extends State<RootPage> {
     );
   }
 }
-

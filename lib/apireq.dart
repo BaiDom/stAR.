@@ -19,9 +19,35 @@ class _APODState extends State<APOD> {
       body = SingleChildScrollView(
         child: Center(
             child: Column(children: [
-          Text(starData!['copyright']),
-          Image.network(starData!['hdurl']),
-          Text(starData!['explanation'])
+          Container(
+              margin: EdgeInsets.all(5),
+              child: Image.network(starData!['hdurl'])),
+          Container(
+            margin: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+            child: Text(
+              "Image Owned By:",
+              style: TextStyle(fontSize: 12),
+            ),
+          ),
+          Text(starData!['copyright'],
+              style: TextStyle(fontSize: 12, color: Colors.amber)),
+          Row(children: const [Text(""), Spacer(), Text("")]),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              starData!['title'],
+              style: TextStyle(fontSize: 25, fontFamily: "MartianMono"),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Container(
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.black)),
+              padding: const EdgeInsets.all(10),
+              margin: EdgeInsets.all(5),
+              width: 375,
+              child: Text(starData!['explanation'],
+                  style: TextStyle(fontSize: 15)))
         ])),
       );
     } else {
@@ -39,7 +65,15 @@ class _APODState extends State<APOD> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Astronomy Picture Of The Day'),
+        title: FittedBox(
+          fit: BoxFit.cover,
+          child: const Text('Astronomy Picture Of The Day',
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: "MartianMono",
+                fontWeight: FontWeight.bold,
+              )),
+        ),
       ),
       body: body,
     );

@@ -26,9 +26,8 @@ class _StarPageState extends State<StarPage> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          
           children: [
-            Image.asset('images/stars.png'),
+            Image.asset('assets/images/starmap.png'),
             const SizedBox(
               height: 5,
             ),
