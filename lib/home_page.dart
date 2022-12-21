@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:test_project/location_page.dart';
 import 'package:test_project/star_map.dart';
 import 'apireq.dart';
-import 'package:http/http.dart' as http;
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

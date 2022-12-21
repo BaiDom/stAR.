@@ -16,12 +16,14 @@ class _APODState extends State<APOD> {
   Widget build(BuildContext context) {
     var body;
     if (starData != null) {
-      body = Center(
-          child: Column(children: [
-        Text(starData!['copyright']),
-        Image.network(starData!['url']),
-        Text(starData!['explanation'])
-      ]));
+      body = SingleChildScrollView(
+        child: Center(
+            child: Column(children: [
+          Text(starData!['copyright']),
+          Image.network(starData!['hdurl']),
+          Text(starData!['explanation'])
+        ])),
+      );
     } else {
       body = Center(
           child: Column(
