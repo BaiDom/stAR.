@@ -52,21 +52,13 @@ class _APODState extends State<APOD> {
               margin: EdgeInsets.all(5),
               width: 375,
               child: Text(starData!['explanation'],
-                  style: TextStyle(fontSize: 15)))
+                  style: TextStyle(fontSize: 15), textAlign: TextAlign.center))
         ])),
       );
     } else {
       body = Center(
-          child: Column(
-        children: [
-          Text(
-              'Hey there Space Cadet, would you like to view an amazing astronomical picture from NASA everyday? You would! Well then click the button!'),
-          ElevatedButton(
-            onPressed: _fetchAPI,
-            child: Text("Get Awesome Stuff"),
-          )
-        ],
-      ));
+        child: Text('...loading 🔭 🔭 🔭'),
+      );
     }
     return Scaffold(
       appBar: AppBar(
