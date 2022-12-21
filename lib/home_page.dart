@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:test_project/location_page.dart';
 import 'package:test_project/star_map.dart';
+import 'apireq.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -32,6 +36,18 @@ class HomePage extends StatelessWidget {
             );
           },
           child: Text('Location'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return const APOD();
+                },
+              ),
+            );
+          },
+          child: Text('Astronomy Picture Of The Day'),
         ),
       ]),
     );
