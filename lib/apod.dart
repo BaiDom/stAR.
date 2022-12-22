@@ -5,12 +5,17 @@ import 'package:http/http.dart' as http;
 class APOD extends StatefulWidget {
   const APOD({super.key});
 
-  @override
   State<APOD> createState() => _APODState();
 }
 
 class _APODState extends State<APOD> {
   Map<String, dynamic>? starData;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAPI();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,21 +52,13 @@ class _APODState extends State<APOD> {
               margin: EdgeInsets.all(5),
               width: 375,
               child: Text(starData!['explanation'],
-                  style: TextStyle(fontSize: 15)))
+                  style: TextStyle(fontSize: 15), textAlign: TextAlign.center))
         ])),
       );
     } else {
       body = Center(
-          child: Column(
-        children: [
-          Text(
-              'Hey there Space Cadet, would you like to view an amazing astronomical picture from NASA everyday? You would! Well then click the button!'),
-          ElevatedButton(
-            onPressed: fetchAPI,
-            child: Text("Get Awesome Stuff"),
-          )
-        ],
-      ));
+        child: Text('...loading 🔭 🔭 🔭'),
+      );
     }
     return Scaffold(
       appBar: AppBar(
@@ -79,7 +76,7 @@ class _APODState extends State<APOD> {
     );
   }
 
-  void fetchAPI() async {
+  _fetchAPI() async {
     const url =
         'https://api.nasa.gov/planetary/apod?api_key=iRDlURIVK0SQdDk3D5Wx1Rd1Tr9J4zP5YHSWWP91';
     var uri = Uri.parse(url);

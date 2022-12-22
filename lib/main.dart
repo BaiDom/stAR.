@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:test_project/home_page.dart';
 import 'package:test_project/moon_page.dart';
+
 import 'splash_page.dart';
+
+import 'package:test_project/starapi.dart';
+import 'package:test_project/aug_reality.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -36,7 +41,8 @@ class _RootPageState extends State<RootPage> {
   int currentPage = 0;
   List<Widget> pages = const [
     HomePage(),
-    MoonPage(),
+    HomeScreen(),
+    StarAPI(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -54,9 +60,16 @@ class _RootPageState extends State<RootPage> {
         ),
       ),
       body: pages[currentPage],
+      // Augmented Reality button here: -----------------------------
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          debugPrint('Floating Action Button');
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (BuildContext context) {
+                return const AugReality();
+              },
+            ),
+          );
         },
         child: Icon(Icons.view_in_ar),
       ),

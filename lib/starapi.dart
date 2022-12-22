@@ -1,36 +1,35 @@
-import 'dart:ui';
-
-import 'package:flutter/material.dart';
-
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class StarAPI extends StatefulWidget {
+  const StarAPI({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<StarAPI> createState() => _HomeScreenState();
 }
+
+var a = 'hello world';
 
 Future<String> postData(Position location) async {
   DateTime dateToday = DateTime.now();
   String date = dateToday.toString().substring(0, 10);
   var res = await http.post(
-    Uri.parse('https://api.astronomyapi.com/api/v2/studio/moon-phase'),
+    Uri.parse('https://api.astronomyapi.com/api/v2/studio/star-chart'),
     body: jsonEncode({
-      "format": "png",
-      "style": {
-        "moonStyle": "sketch",
-        "backgroundStyle": "stars",
-        "backgroundColor": "red",
-        "headingColor": "white",
-        "textColor": "red"
+      "style": "navy",
+      "observer": {
+        "latitude": location.latitude,
+        "longitude": location.longitude,
+        "date": date
       },
-      "observer": {"latitude": 6.56774, "longitude": 79.88956, "date": date},
-      "view": {"type": "portrait-simple", "orientation": "south-up"}
+      "view": {
+        "type": "constellation",
+        "parameters": {"constellation": "ori"}
+      },
     }),
     headers: {
       HttpHeaders.authorizationHeader:
@@ -43,10 +42,14 @@ Future<String> postData(Position location) async {
   return starChartUrl;
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<StarAPI> {
+  late TransformationController controller;
+  TapDownDetails? tapDownDetails;
+
   @override
   void initState() {
     super.initState();
+    controller = TransformationController();
     _getCurrentPosition().then((_) async {
       var imageUrl = await postData(_currentPosition!);
       print('success?');
@@ -54,6 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
         this.imageUrl = imageUrl;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+
+    super.dispose();
   }
 
   String? _currentAddress;
@@ -89,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return true;
   }
 
-  Future<void> _getCurrentPosition() async {
+  Future _getCurrentPosition() async {
     final hasPermission = await _handleLocationPermission();
 
     if (!hasPermission) return;
@@ -120,7 +130,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     if (imageUrl == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text("Location Page")),
+        appBar: AppBar(
+            title: FittedBox(
+          fit: BoxFit.cover,
+          child: const Text('Location',
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: "MartianMono",
+                fontWeight: FontWeight.bold,
+              )),
+        )),
         body: SafeArea(
           child: Center(
             child: Column(
@@ -130,12 +149,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   margin: const EdgeInsets.all(20),
                   padding: const EdgeInsets.all(10),
                   child: Text(
-                    "Scanning the skies for your moon phase...\n\n 🌖 🌗 🌘 🌑 🌒 🌓 🌔",
+                    "Scanning the skies for your star map...  🌟 🌟 🌟",
                     style: TextStyle(fontSize: 25, fontFamily: "MartianMono"),
                   ),
                 ),
-                Text('LAT: ${_currentPosition?.latitude ?? ""}'),
-                Text('LNG: ${_currentPosition?.longitude ?? ""}'),
+                Row(children: const [Text(""), Spacer(), Text("")]),
+                Text('LAT: ${_currentPosition?.latitude ?? ""}',
+                    style: TextStyle(fontSize: 25, fontFamily: "MartianMono")),
+                Text('LNG: ${_currentPosition?.longitude ?? ""}',
+                    style: TextStyle(fontSize: 25, fontFamily: "MartianMono")),
                 const SizedBox(height: 32),
               ],
             ),
@@ -144,13 +166,55 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     } else {
       return Scaffold(
-          appBar: AppBar(
-            title: const Text('API call'),
+        appBar: AppBar(
+          title: SingleChildScrollView(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: const Text('stAR.Map',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: "MartianMono",
+                    fontWeight: FontWeight.bold,
+                  )),
+            ),
           ),
-          body: Center(
-              child: Column(children: [
-            Image.network(imageUrl!),
-          ])));
+        ),
+        body: Center(
+          child: Column(children: [
+            Container(
+                child: GestureDetector(
+              onDoubleTapDown: (details) => tapDownDetails = details,
+              onDoubleTap: () {
+                final position = tapDownDetails!.localPosition;
+
+                final double scale = 2.75;
+                final x = -position.dx * (scale - 1);
+                final y = -position.dy * (scale - 1);
+                final zoomed = Matrix4.identity()
+                  ..translate(x, y)
+                  ..scale(scale);
+
+                final value =
+                    controller.value.isIdentity() ? zoomed : Matrix4.identity();
+                controller.value = value;
+              },
+              child: InteractiveViewer(
+                clipBehavior: Clip.none,
+                transformationController: controller,
+                panEnabled: false,
+                scaleEnabled: false,
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Image.network(
+                    imageUrl!,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            )),
+          ]),
+        ),
+      );
     }
   }
 }
