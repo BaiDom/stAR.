@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_project/home_page.dart';
 import 'package:test_project/moon_page.dart';
+import 'package:test_project/starapi.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,6 +37,7 @@ class _RootPageState extends State<RootPage> {
   List<Widget> pages = const [
     HomePage(),
     MoonPage(),
+    StarAPI(),
   ];
   @override
   Widget build(BuildContext context) {
