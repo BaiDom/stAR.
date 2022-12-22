@@ -81,7 +81,7 @@ class _AugRealityState extends State<AugReality> {
                 ),
                 ElevatedButton(
                     onPressed: onRemoveEverything,
-                    child: const Text("Remove Ducks")),
+                    child: const Text("Remove Placed Objects")),
               ],
             ),
           ],
@@ -114,9 +114,10 @@ class _AugRealityState extends State<AugReality> {
 // NODES STUFF
 
   Future<void> onRemoveEverything() async {
-    /*nodes.forEach((node) {
+    nodes.forEach((node) {
       this.arObjectManager.removeNode(node);
-    });*/
+    });
+    nodes = [];
     anchors.forEach((anchor) {
       this.arAnchorManager!.removeAnchor(anchor);
     });
@@ -142,8 +143,8 @@ class _AugRealityState extends State<AugReality> {
         var newNode = ARNode(
             type: NodeType.webGLB,
             uri:
-                "https://github.com/captainread/test-assets/blob/main/Earth_1_12756%20(1).glb?raw=true",
-            scale: Vector3(0.2, 0.2, 0.2),
+                "https://github.com/captainread/test-assets/blob/main/Earth4k.glb?raw=true",
+            scale: Vector3(0.3, 0.3, 0.3),
             position: Vector3(0.0, 0.0, 0.0),
             rotation: Vector4(1.0, 0.0, 0.0, 0.0));
         bool? didAddNodeToAnchor =
@@ -175,7 +176,7 @@ class _AugRealityState extends State<AugReality> {
           // position of the object (I'm guessing compared to world origin):
           position: Vector3(0.0, 0.0, 0.0),
           // size of the object:
-          scale: Vector3(0.2, 0.2, 0.2));
+          scale: Vector3(0.15, 0.15, 0.15));
       bool? didAddWebNode = await arObjectManager.addNode(newNode);
       webObjectNode = (didAddWebNode!) ? newNode : null;
     }
