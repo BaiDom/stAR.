@@ -15,6 +15,8 @@ class StarAPI extends StatefulWidget {
 var a = 'hello world';
 
 Future<String> postData(Position location) async {
+  DateTime dateToday = DateTime.now();
+  String date = dateToday.toString().substring(0, 10);
   var res = await http.post(
     Uri.parse('https://api.astronomyapi.com/api/v2/studio/star-chart'),
     body: jsonEncode({
@@ -22,7 +24,7 @@ Future<String> postData(Position location) async {
       "observer": {
         "latitude": location.latitude,
         "longitude": location.longitude,
-        "date": "2019-12-20"
+        "date": date
       },
       "view": {
         "type": "constellation",
@@ -124,18 +126,6 @@ class _HomeScreenState extends State<StarAPI> {
     });
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _getCurrentPosition().then((_) async {
-  //     var imageUrl = await postData(_currentPosition!);
-  //     print('success?');
-  //     setState(() {
-  //       this.imageUrl = imageUrl;
-  //     });
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     if (imageUrl == null) {
@@ -155,28 +145,20 @@ class _HomeScreenState extends State<StarAPI> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                    "Finding A Star Map For Your Location... This May Take A Few Seconds!",
-                    style: TextStyle(fontSize: 25, fontFamily: "MartianMono")),
+                Container(
+                  margin: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    "Scanning the skies for your star map...  🌟 🌟 🌟",
+                    style: TextStyle(fontSize: 25, fontFamily: "MartianMono"),
+                  ),
+                ),
                 Row(children: const [Text(""), Spacer(), Text("")]),
                 Text('LAT: ${_currentPosition?.latitude ?? ""}',
                     style: TextStyle(fontSize: 25, fontFamily: "MartianMono")),
                 Text('LNG: ${_currentPosition?.longitude ?? ""}',
                     style: TextStyle(fontSize: 25, fontFamily: "MartianMono")),
-                // Text('ADDRESS: ${_currentAddress ?? ""}'),
                 const SizedBox(height: 32),
-                // ElevatedButton(
-                //   onPressed: () {
-                //     _getCurrentPosition().then((_) async {
-                //       var imageUrl = await postData(_currentPosition!);
-                //       print('success?');
-                //       setState(() {
-                //         this.imageUrl = imageUrl;
-                //       });
-                //     });
-                //   },
-                //   child: const Text("Finding Your Location..."),
-                // )
               ],
             ),
           ),
@@ -185,14 +167,16 @@ class _HomeScreenState extends State<StarAPI> {
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: FittedBox(
-            fit: BoxFit.cover,
-            child: const Text('stAR.Map',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: "MartianMono",
-                  fontWeight: FontWeight.bold,
-                )),
+          title: SingleChildScrollView(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: const Text('stAR.Map',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: "MartianMono",
+                    fontWeight: FontWeight.bold,
+                  )),
+            ),
           ),
         ),
         body: Center(
