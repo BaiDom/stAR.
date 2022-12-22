@@ -41,6 +41,29 @@ Future<String> postData(Position location) async {
 }
 
 class _HomeScreenState extends State<StarAPI> {
+  late TransformationController controller;
+  TapDownDetails? tapDownDetails;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TransformationController();
+    _getCurrentPosition().then((_) async {
+      var imageUrl = await postData(_currentPosition!);
+      print('success?');
+      setState(() {
+        this.imageUrl = imageUrl;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+
+    super.dispose();
+  }
+
   String? _currentAddress;
   Position? _currentPosition;
   String? imageUrl;
@@ -101,17 +124,17 @@ class _HomeScreenState extends State<StarAPI> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _getCurrentPosition().then((_) async {
-      var imageUrl = await postData(_currentPosition!);
-      print('success?');
-      setState(() {
-        this.imageUrl = imageUrl;
-      });
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _getCurrentPosition().then((_) async {
+  //     var imageUrl = await postData(_currentPosition!);
+  //     print('success?');
+  //     setState(() {
+  //       this.imageUrl = imageUrl;
+  //     });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -161,21 +184,53 @@ class _HomeScreenState extends State<StarAPI> {
       );
     } else {
       return Scaffold(
-          appBar: AppBar(
-            title: FittedBox(
-              fit: BoxFit.cover,
-              child: const Text('stAR.Map',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: "MartianMono",
-                    fontWeight: FontWeight.bold,
-                  )),
-            ),
+        appBar: AppBar(
+          title: FittedBox(
+            fit: BoxFit.cover,
+            child: const Text('stAR.Map',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: "MartianMono",
+                  fontWeight: FontWeight.bold,
+                )),
           ),
-          body: Center(
-              child: Column(children: [
-            Image.network(imageUrl!),
-          ])));
+        ),
+        body: Center(
+          child: Column(children: [
+            Container(
+                child: GestureDetector(
+              onDoubleTapDown: (details) => tapDownDetails = details,
+              onDoubleTap: () {
+                final position = tapDownDetails!.localPosition;
+
+                final double scale = 2.75;
+                final x = -position.dx * (scale - 1);
+                final y = -position.dy * (scale - 1);
+                final zoomed = Matrix4.identity()
+                  ..translate(x, y)
+                  ..scale(scale);
+
+                final value =
+                    controller.value.isIdentity() ? zoomed : Matrix4.identity();
+                controller.value = value;
+              },
+              child: InteractiveViewer(
+                clipBehavior: Clip.none,
+                transformationController: controller,
+                panEnabled: false,
+                scaleEnabled: false,
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Image.network(
+                    imageUrl!,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            )),
+          ]),
+        ),
+      );
     }
   }
 }
