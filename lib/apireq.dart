@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:gallery_saver/gallery_saver.dart';
 
 class APOD extends StatefulWidget {
   const APOD({super.key});
@@ -9,6 +10,7 @@ class APOD extends StatefulWidget {
 }
 
 class _APODState extends State<APOD> {
+  String downloadButtonText = 'Download';
   Map<String, dynamic>? starData;
 
   @override
@@ -52,7 +54,19 @@ class _APODState extends State<APOD> {
               margin: EdgeInsets.all(5),
               width: 375,
               child: Text(starData!['explanation'],
-                  style: TextStyle(fontSize: 15), textAlign: TextAlign.center))
+                  style: TextStyle(fontSize: 15), textAlign: TextAlign.center)),
+          //Download Astronomy Picture Of The Day
+          ElevatedButton(
+            onPressed: () async {
+              await GallerySaver.saveImage(starData!['hdurl']).then((value) => {
+                    setState(() {
+                      downloadButtonText = 'saving in progress...';
+                    })
+                  });
+            },
+            child: Text(downloadButtonText,
+                style: TextStyle(fontFamily: "MartianMono")),
+          )
         ])),
       );
     } else {
