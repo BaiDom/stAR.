@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_project/home_page.dart';
 import 'package:test_project/moon_page.dart';
+import 'splash_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.amber,
           scaffoldBackgroundColor: Colors.black,
           textTheme: (TextTheme(bodyText2: TextStyle(color: Colors.white)))),
-      home: const RootPage(),
+      home: const SplashPage(),
     );
   }
 }
