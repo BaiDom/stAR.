@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:test_project/location_page.dart';
 import 'package:test_project/star_map.dart';
+import 'package:test_project/starapi.dart';
 import 'apireq.dart';
+import 'starapi.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -15,12 +17,13 @@ class HomePage extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return const StarPage();
+                  return const StarAPI();
                 },
               ),
             );
           },
-          child: Text('View Star Map'),
+          child: Text('View Star Map',
+              style: TextStyle(fontFamily: "MartianMono")),
         ),
         ElevatedButton(
           onPressed: () {
@@ -32,7 +35,7 @@ class HomePage extends StatelessWidget {
               ),
             );
           },
-          child: Text('Location'),
+          child: Text('Location', style: TextStyle(fontFamily: "MartianMono")),
         ),
         ElevatedButton(
           onPressed: () {
@@ -44,7 +47,8 @@ class HomePage extends StatelessWidget {
               ),
             );
           },
-          child: Text('Astronomy Picture Of The Day'),
+          child: Text('Astronomy Picture Of The Day',
+              style: TextStyle(fontFamily: "MartianMono")),
         ),
       ]),
     );
