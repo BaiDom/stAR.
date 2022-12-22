@@ -60,7 +60,7 @@ class _APODState extends State<APOD> {
             onPressed: () async {
               await GallerySaver.saveImage(starData!['hdurl']).then((value) => {
                     setState(() {
-                      downloadButtonText = 'saving in progress...';
+                      downloadButtonText = 'image saved!';
                     })
                   });
             },
