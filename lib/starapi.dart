@@ -126,18 +126,6 @@ class _HomeScreenState extends State<StarAPI> {
     });
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _getCurrentPosition().then((_) async {
-  //     var imageUrl = await postData(_currentPosition!);
-  //     print('success?');
-  //     setState(() {
-  //       this.imageUrl = imageUrl;
-  //     });
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     if (imageUrl == null) {
@@ -165,26 +153,12 @@ class _HomeScreenState extends State<StarAPI> {
                     style: TextStyle(fontSize: 25, fontFamily: "MartianMono"),
                   ),
                 ),
-
                 Row(children: const [Text(""), Spacer(), Text("")]),
                 Text('LAT: ${_currentPosition?.latitude ?? ""}',
                     style: TextStyle(fontSize: 25, fontFamily: "MartianMono")),
                 Text('LNG: ${_currentPosition?.longitude ?? ""}',
                     style: TextStyle(fontSize: 25, fontFamily: "MartianMono")),
-                // Text('ADDRESS: ${_currentAddress ?? ""}'),
                 const SizedBox(height: 32),
-                // ElevatedButton(
-                //   onPressed: () {
-                //     _getCurrentPosition().then((_) async {
-                //       var imageUrl = await postData(_currentPosition!);
-                //       print('success?');
-                //       setState(() {
-                //         this.imageUrl = imageUrl;
-                //       });
-                //     });
-                //   },
-                //   child: const Text("Finding Your Location..."),
-                // )
               ],
             ),
           ),
@@ -193,14 +167,16 @@ class _HomeScreenState extends State<StarAPI> {
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: FittedBox(
-            fit: BoxFit.cover,
-            child: const Text('stAR.Map',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: "MartianMono",
-                  fontWeight: FontWeight.bold,
-                )),
+          title: SingleChildScrollView(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: const Text('stAR.Map',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: "MartianMono",
+                    fontWeight: FontWeight.bold,
+                  )),
+            ),
           ),
         ),
         body: Center(

@@ -44,6 +44,18 @@ Future<String> postData(Position location) async {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentPosition().then((_) async {
+      var imageUrl = await postData(_currentPosition!);
+      print('success?');
+      setState(() {
+        this.imageUrl = imageUrl;
+      });
+    });
+  }
+
   String? _currentAddress;
   Position? _currentPosition;
   String? imageUrl;
@@ -114,22 +126,17 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Container(
+                  margin: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    "Scanning the skies for your moon phase...\n\n 🌖 🌗 🌘 🌑 🌒 🌓 🌔",
+                    style: TextStyle(fontSize: 25, fontFamily: "MartianMono"),
+                  ),
+                ),
                 Text('LAT: ${_currentPosition?.latitude ?? ""}'),
                 Text('LNG: ${_currentPosition?.longitude ?? ""}'),
-                Text('ADDRESS: ${_currentAddress ?? ""}'),
                 const SizedBox(height: 32),
-                ElevatedButton(
-                  onPressed: () {
-                    _getCurrentPosition().then((_) async {
-                      var imageUrl = await postData(_currentPosition!);
-                      print('success?');
-                      setState(() {
-                        this.imageUrl = imageUrl;
-                      });
-                    });
-                  },
-                  child: const Text("Get Current Location"),
-                )
               ],
             ),
           ),
