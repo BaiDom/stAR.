@@ -30,12 +30,12 @@ class _APODState extends State<APOD> {
           Container(
             margin: const EdgeInsets.fromLTRB(0, 8, 0, 0),
             child: Text(
-              "Image Owned By:",
+              "For Image Credits Visit: apod.nasa.gov/apod",
               style: TextStyle(fontSize: 12),
             ),
           ),
-          Text(starData!['copyright'],
-              style: TextStyle(fontSize: 12, color: Colors.amber)),
+          // Text(starData!['copyright'],
+          //     style: TextStyle(fontSize: 12, color: Colors.amber)),
           Row(children: const [Text(""), Spacer(), Text("")]),
           Padding(
             padding: const EdgeInsets.all(8.0),
