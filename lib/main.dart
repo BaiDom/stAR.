@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:test_project/home_page.dart';
 import 'package:test_project/moon_page.dart';
+
+import 'splash_page.dart';
+
 import 'package:test_project/starapi.dart';
 import 'package:test_project/aug_reality.dart';
 
 import 'intro-slideScreen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +25,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.amber,
           scaffoldBackgroundColor: Colors.black,
           textTheme: (TextTheme(bodyText2: TextStyle(color: Colors.white)))),
-      home: const IntroSliderPage(),
+
+      home: const SplashPage(),
     );
   }
 }
@@ -45,18 +50,18 @@ class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: FittedBox(
-            fit: BoxFit.cover,
-            child: Text('stAR.',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: "MartianMono",
-                    fontWeight: FontWeight.bold)),
-          ),
-        ),
-      ),
+      // appBar: AppBar(
+      //   title: Center(
+      //     child: FittedBox(
+      //       fit: BoxFit.cover,
+      //       child: Text('stAR.',
+      //           style: TextStyle(
+      //               color: Colors.black,
+      //               fontFamily: "MartianMono",
+      //               fontWeight: FontWeight.bold)),
+      //     ),
+      //   ),
+      // ),
       body: pages[currentPage],
       // Augmented Reality button here: -----------------------------
       floatingActionButton: FloatingActionButton(

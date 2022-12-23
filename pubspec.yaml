@@ -42,6 +42,9 @@ dependencies:
   vector_math: ^2.1.2
   intro_slider: ^2.3.4
 
+  gallery_saver: ^2.3.2
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

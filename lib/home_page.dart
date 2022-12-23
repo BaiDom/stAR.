@@ -10,22 +10,34 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(children: [
-        ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return const APOD();
-                },
-              ),
-            );
-          },
-          child: Text('Astronomy Picture Of The Day',
-              style: TextStyle(fontFamily: "MartianMono")),
-        ),
-      ]),
+    return Scaffold(
+      appBar: AppBar(
+          title: FittedBox(
+        fit: BoxFit.cover,
+        child: const Text('stAR.',
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: "MartianMono",
+              fontWeight: FontWeight.bold,
+            )),
+      )),
+      body: Center(
+        child: Column(children: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return const APOD();
+                  },
+                ),
+              );
+            },
+            child: Text('Astronomy Picture Of The Day',
+                style: TextStyle(fontFamily: "MartianMono")),
+          ),
+        ]),
+      ),
     );
   }
 }
