@@ -7,6 +7,8 @@ import 'splash_page.dart';
 import 'package:test_project/starapi.dart';
 import 'package:test_project/aug_reality.dart';
 
+import 'intro-slideScreen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -23,6 +25,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.amber,
           scaffoldBackgroundColor: Colors.black,
           textTheme: (TextTheme(bodyText2: TextStyle(color: Colors.white)))),
+
       home: const SplashPage(),
     );
   }
