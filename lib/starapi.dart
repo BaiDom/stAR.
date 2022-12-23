@@ -133,7 +133,7 @@ class _HomeScreenState extends State<StarAPI> {
         appBar: AppBar(
             title: FittedBox(
           fit: BoxFit.cover,
-          child: const Text('Location',
+          child: const Text('Orbiting...',
               style: TextStyle(
                 color: Colors.black,
                 fontFamily: "MartianMono",
@@ -180,9 +180,9 @@ class _HomeScreenState extends State<StarAPI> {
           ),
         ),
         body: Center(
-          child: Column(children: [
-            Container(
-                child: GestureDetector(
+          child: Container(
+            margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: GestureDetector(
               onDoubleTapDown: (details) => tapDownDetails = details,
               onDoubleTap: () {
                 final position = tapDownDetails!.localPosition;
@@ -205,14 +205,12 @@ class _HomeScreenState extends State<StarAPI> {
                 scaleEnabled: false,
                 child: AspectRatio(
                   aspectRatio: 1,
-                  child: Image.network(
-                    imageUrl!,
-                    fit: BoxFit.cover,
-                  ),
+                  child: Image.network(imageUrl!,
+                      height: 600, width: 375, fit: BoxFit.cover),
                 ),
               ),
-            )),
-          ]),
+            ),
+          ),
         ),
       );
     }

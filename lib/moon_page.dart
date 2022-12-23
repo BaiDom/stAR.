@@ -27,7 +27,7 @@ Future<String> postData(Position location) async {
         "backgroundStyle": "stars",
         "backgroundColor": "red",
         "headingColor": "white",
-        "textColor": "red"
+        "textColor": "#ffc107"
       },
       "observer": {"latitude": 6.56774, "longitude": 79.88956, "date": date},
       "view": {"type": "portrait-simple", "orientation": "south-up"}
@@ -120,7 +120,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     if (imageUrl == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text("Location Page")),
+        appBar: AppBar(
+            title: const Text("Orbiting...",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, fontFamily: "MartianMono"))),
         body: SafeArea(
           child: Center(
             child: Column(
@@ -134,8 +137,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(fontSize: 25, fontFamily: "MartianMono"),
                   ),
                 ),
-                Text('LAT: ${_currentPosition?.latitude ?? ""}'),
-                Text('LNG: ${_currentPosition?.longitude ?? ""}'),
+                Text(
+                  'LAT: ${_currentPosition?.latitude ?? ""}',
+                  style: TextStyle(fontSize: 25, fontFamily: "MartianMono"),
+                ),
+                Text(
+                  'LNG: ${_currentPosition?.longitude ?? ""}',
+                  style: TextStyle(fontSize: 25, fontFamily: "MartianMono"),
+                ),
                 const SizedBox(height: 32),
               ],
             ),
@@ -144,13 +153,18 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     } else {
       return Scaffold(
-          appBar: AppBar(
-            title: const Text('API call'),
+        appBar: AppBar(
+          title: const Text(
+            'stAR.Lunar',
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontFamily: "MartianMono"),
           ),
-          body: Center(
-              child: Column(children: [
-            Image.network(imageUrl!),
-          ])));
+        ),
+        body: Center(
+          child: Image.network(imageUrl!,
+              height: 500, width: 375, fit: BoxFit.cover),
+        ),
+      );
     }
   }
 }
