@@ -1,4 +1,4 @@
-# stAR
+# stAR.
 ## Jet off and see the stars without even having to leave the ground. 
 
 + Look at your location's star map without needing a telescope.
