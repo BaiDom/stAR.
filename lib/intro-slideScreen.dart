@@ -28,7 +28,7 @@ class IntroSliderPageState extends State<IntroSliderPage> {
     slides.add(
       Slide(
         title: "AR",
-        description: "Explore the Moon in reality!",
+        description: "Explore the Moon in Augmented Reality!",
         pathImage: "assets/images/virtualreality.png",
       ),
     );

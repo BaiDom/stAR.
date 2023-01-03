@@ -33,7 +33,7 @@ class _APODState extends State<APOD> {
             margin: const EdgeInsets.fromLTRB(0, 8, 0, 0),
             child: Text(
               "For Image Credits Visit: apod.nasa.gov/apod",
-              style: TextStyle(fontSize: 12),
+              style: TextStyle(fontSize: 12, fontFamily: "MartianMono"),
             ),
           ),
           // Text(starData!['copyright'],
@@ -43,18 +43,20 @@ class _APODState extends State<APOD> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               starData!['title'],
-              style: TextStyle(fontSize: 25, fontFamily: "MartianMono"),
+              style: TextStyle(
+                  fontSize: 25, fontFamily: "MartianMono", color: Colors.amber),
               textAlign: TextAlign.center,
             ),
           ),
           Container(
               decoration:
                   BoxDecoration(border: Border.all(color: Colors.black)),
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(5),
               margin: EdgeInsets.all(5),
               width: 375,
               child: Text(starData!['explanation'],
-                  style: TextStyle(fontSize: 15), textAlign: TextAlign.center)),
+                  style: TextStyle(fontSize: 15, fontFamily: "MartianMono"),
+                  textAlign: TextAlign.center)),
           //Download Astronomy Picture Of The Day
           ElevatedButton(
             onPressed: () async {

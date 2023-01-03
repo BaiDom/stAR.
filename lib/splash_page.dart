@@ -20,7 +20,7 @@ class _SplashState extends State<SplashPage> {
 
   _navigatetohome() async {
     await Future.delayed(Duration(milliseconds: 1500), () {});
-    Navigator.push(
+    Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => IntroSliderPage()));
   }
 
