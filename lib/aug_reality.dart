@@ -24,6 +24,17 @@ class _AugRealityState extends State<AugReality> {
   late ARObjectManager arObjectManager;
   late ARAnchorManager? arAnchorManager;
 
+  // End drawer
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _openEndDrawer() {
+    _scaffoldKey.currentState!.openEndDrawer();
+  }
+
+  void _closeEndDrawer() {
+    Navigator.of(context).pop();
+  }
+
   // String webObjectReference
   ARNode? webObjectNode;
   ARNode? webObjectNode2;
@@ -39,11 +50,12 @@ class _AugRealityState extends State<AugReality> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Center(
           child: FittedBox(
             fit: BoxFit.cover,
-            child: Text('Augmented Reality',
+            child: Text('stAR.',
                 style: TextStyle(
                     color: Colors.black,
                     fontFamily: "MartianMono",
@@ -51,8 +63,7 @@ class _AugRealityState extends State<AugReality> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -68,21 +79,77 @@ class _AugRealityState extends State<AugReality> {
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Expanded(
-                  child: ElevatedButton(
-                      onPressed: onWebObjectAtButtonPressed,
-                      child: const Text("Add / Remove Object 1")),
-                ),
-                Expanded(
-                  child: ElevatedButton(
-                      onPressed: onWebObjectAtButtonPressed2,
-                      child: const Text("Add / Remove Object 2")),
-                ),
                 ElevatedButton(
-                    onPressed: onRemoveEverything,
-                    child: const Text("Remove Placed Objects")),
+                  onPressed: () => showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text('AR Instructions'),
+                      content: const Text(
+                          'Please pan your camera around until planes (flat surfaces) have been detected around you. These are indicated by dotted fields.\n\nUse the right-hand menu to add 3D models to the scene. Some models will be placed for you. Others can be placed by tapping on the planes.'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'OK'),
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    ),
+                  ),
+                  child: const Text('Instructions'),
+                ),
+
+                ElevatedButton(
+                  onPressed: _openEndDrawer,
+                  child: const Text('Add Models'),
+                ),
+
+                // ElevatedButton(
+                //     onPressed: onRemoveEverything,
+                //     child: const Text("Remove Placed Objects")),
               ],
+            ),
+          ],
+        ),
+      ),
+      endDrawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.amber,
+              ),
+              child: Text('Add models',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: "MartianMono",
+                      fontWeight: FontWeight.bold)),
+            ),
+            ListTile(
+              title: Text(
+                  'Press the + buttons to add models to the scene.\n\nPlease wait a moment for your model to load: this menu will close once it has loaded.'),
+            ),
+            ListTile(
+              leading: IconButton(
+                icon: Icon(Icons.add_circle),
+                onPressed: () => addMoon(),
+              ),
+              title: Text('Add Moon'),
+            ),
+            ListTile(
+              leading: IconButton(
+                icon: Icon(Icons.add_circle),
+                onPressed: () => addHubble(),
+              ),
+              title: Text('Add Hubble Telescope'),
+            ),
+            ListTile(
+              leading: IconButton(
+                icon: Icon(Icons.remove_circle),
+                onPressed: () => onRemoveEverything(),
+              ),
+              title: Text('Remove all objects'),
             ),
           ],
         ),
@@ -103,7 +170,7 @@ class _AugRealityState extends State<AugReality> {
           showFeaturePoints: false,
           showPlanes: true,
           customPlaneTexturePath: "assets/triangle.png",
-          showWorldOrigin: true,
+          showWorldOrigin: false,
           // handleTaps: false,
         );
     this.arObjectManager.onInitialize();
@@ -114,6 +181,8 @@ class _AugRealityState extends State<AugReality> {
 // NODES STUFF
 
   Future<void> onRemoveEverything() async {
+    arObjectManager.removeNode(webObjectNode!);
+    arObjectManager.removeNode(webObjectNode2!);
     nodes.forEach((node) {
       this.arObjectManager.removeNode(node);
     });
@@ -122,6 +191,7 @@ class _AugRealityState extends State<AugReality> {
       this.arAnchorManager!.removeAnchor(anchor);
     });
     anchors = [];
+    _closeEndDrawer();
   }
 
   Future<void> onNodeTapped(List<String> nodes) async {
@@ -160,13 +230,11 @@ class _AugRealityState extends State<AugReality> {
     }
   }
 
-// BUTTONS STUFF
-
-  Future<void> onWebObjectAtButtonPressed() async {
-    // check if an object has been placed yet. if it hasn't been placed, add the object; if it has, remove it.
+  Future<void> addMoon() async {
     if (webObjectNode != null) {
-      arObjectManager.removeNode(webObjectNode!);
-      webObjectNode = null;
+      // arObjectManager.removeNode(webObjectNode!);
+      // webObjectNode = null;
+      _closeEndDrawer();
     } else {
       var newNode = ARNode(
           type: NodeType.webGLB,
@@ -179,23 +247,26 @@ class _AugRealityState extends State<AugReality> {
           scale: Vector3(0.15, 0.15, 0.15));
       bool? didAddWebNode = await arObjectManager.addNode(newNode);
       webObjectNode = (didAddWebNode!) ? newNode : null;
+      // }
+      _closeEndDrawer();
     }
-  }
 
-// experimenting with creating another (ugly) button which spawns a different model at origin:
-  Future<void> onWebObjectAtButtonPressed2() async {
-    if (webObjectNode2 != null) {
-      arObjectManager.removeNode(webObjectNode2!);
-      webObjectNode2 = null;
-    } else {
-      var newNode = ARNode(
-          type: NodeType.webGLB,
-          uri:
-              "https://github.com/captainread/test-assets/blob/main/Hubble.glb?raw=true",
-          position: Vector3(0.1, 0.1, 0.1),
-          scale: Vector3(0.2, 0.2, 0.2));
-      bool? didAddWebNode = await arObjectManager.addNode(newNode);
-      webObjectNode2 = (didAddWebNode!) ? newNode : null;
+    Future<void> addHubble() async {
+      if (webObjectNode2 != null) {
+        // arObjectManager.removeNode(webObjectNode2!);
+        // webObjectNode2 = null;
+        _closeEndDrawer();
+      } else {
+        var newNode = ARNode(
+            type: NodeType.webGLB,
+            uri:
+                "https://github.com/captainread/test-assets/blob/main/Hubble.glb?raw=true",
+            position: Vector3(0.1, 0.1, 0.1),
+            scale: Vector3(0.2, 0.2, 0.2));
+        bool? didAddWebNode = await arObjectManager.addNode(newNode);
+        webObjectNode2 = (didAddWebNode!) ? newNode : null;
+      }
+      _closeEndDrawer();
     }
   }
 }
