@@ -38,6 +38,7 @@ class _AugRealityState extends State<AugReality> {
   // String webObjectReference
   ARNode? webObjectNode;
   ARNode? webObjectNode2;
+  ARNode? webObjectNode3;
   List<ARAnchor> anchors = [];
   List<ARNode> nodes = [];
 
@@ -81,13 +82,18 @@ class _AugRealityState extends State<AugReality> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(
+                ElevatedButton.icon(
+                  icon: Icon(Icons.help),
+                  label: Text('Instructions'),
                   onPressed: () => showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
                       title: const Text('AR Instructions'),
-                      content: const Text(
-                          'Please pan your camera around until planes (flat surfaces) have been detected around you. These are indicated by dotted fields.\n\nUse the right-hand menu to add 3D models to the scene. Some models will be placed for you. Others can be placed by tapping on the planes.'),
+                      content: Wrap(children: [
+                        Text(
+                            'Please pan your camera around until planes (flat surfaces) have been detected around you. These are indicated by dotted fields.\n\nUse the right-hand menu to add 3D models to the scene. Some models will be placed for you. Others can be placed by tapping on the planes.\n\nTo rotate, tap the placed model - you will see a selection circle. Then press both thumbs (or two fingers) to the screen and swirl them clockwise or anti-clockwise.'),
+                        Image.asset('assets/images/rotate.png'),
+                      ]),
                       actions: <Widget>[
                         TextButton(
                           onPressed: () => Navigator.pop(context, 'OK'),
@@ -96,17 +102,12 @@ class _AugRealityState extends State<AugReality> {
                       ],
                     ),
                   ),
-                  child: const Text('Instructions'),
                 ),
-
-                ElevatedButton(
+                ElevatedButton.icon(
+                  icon: Icon(Icons.menu),
+                  label: Text('AR menu'),
                   onPressed: _openEndDrawer,
-                  child: const Text('Add Models'),
                 ),
-
-                // ElevatedButton(
-                //     onPressed: onRemoveEverything,
-                //     child: const Text("Remove Placed Objects")),
               ],
             ),
           ],
@@ -135,7 +136,7 @@ class _AugRealityState extends State<AugReality> {
                 icon: Icon(Icons.add_circle),
                 onPressed: () => addMoon(),
               ),
-              title: Text('Add Moon'),
+              title: Text(' Moon'),
             ),
             ListTile(
               leading: IconButton(
@@ -146,10 +147,17 @@ class _AugRealityState extends State<AugReality> {
             ),
             ListTile(
               leading: IconButton(
-                icon: Icon(Icons.remove_circle),
+                icon: Icon(Icons.add_circle),
+                onPressed: () => addEarth(),
+              ),
+              title: Text('Add Earth'),
+            ),
+            ListTile(
+              leading: IconButton(
+                icon: Icon(Icons.layers_clear_outlined),
                 onPressed: () => onRemoveEverything(),
               ),
-              title: Text('Remove all objects'),
+              title: Text('Remove model(s)'),
             ),
           ],
         ),
@@ -169,36 +177,92 @@ class _AugRealityState extends State<AugReality> {
     this.arSessionManager.onInitialize(
           showFeaturePoints: false,
           showPlanes: true,
-          customPlaneTexturePath: "assets/triangle.png",
+          customPlaneTexturePath: "Images/triangle.png",
           showWorldOrigin: false,
-          // handleTaps: false,
+          handlePans: false,
+          handleRotation: true,
         );
     this.arObjectManager.onInitialize();
+
     this.arSessionManager.onPlaneOrPointTap = onPlaneOrPointTapped;
-    this.arObjectManager.onNodeTap = onNodeTapped;
+    this.arObjectManager.onRotationStart = onRotationStarted;
+    this.arObjectManager.onRotationChange = onRotationChanged;
+    this.arObjectManager.onRotationEnd = onRotationEnded;
   }
 
-// NODES STUFF
-
-  Future<void> onRemoveEverything() async {
-    arObjectManager.removeNode(webObjectNode!);
-    arObjectManager.removeNode(webObjectNode2!);
-    nodes.forEach((node) {
-      this.arObjectManager.removeNode(node);
-    });
-    nodes = [];
-    anchors.forEach((anchor) {
-      this.arAnchorManager!.removeAnchor(anchor);
-    });
-    anchors = [];
+// places moon model near world origin
+  Future<void> addMoon() async {
+    if (webObjectNode != null) {
+      _closeEndDrawer();
+    }
+    if (webObjectNode2 != null) {
+      arObjectManager.removeNode(webObjectNode2!);
+      webObjectNode2 = null;
+    }
+    if (webObjectNode3 != null) {
+      arObjectManager.removeNode(webObjectNode3!);
+      webObjectNode3 = null;
+    }
+    var newNode = ARNode(
+        type: NodeType.webGLB,
+        uri:
+            "https://github.com/captainread/test-assets/blob/main/Moon_1_3474.glb?raw=true",
+        position: Vector3(0.0, 0.0, -0.2),
+        scale: Vector3(0.15, 0.15, 0.15));
+    bool? didAddWebNode = await arObjectManager.addNode(newNode);
+    webObjectNode = (didAddWebNode!) ? newNode : null;
     _closeEndDrawer();
   }
 
-  Future<void> onNodeTapped(List<String> nodes) async {
-    var number = nodes.length;
-    this.arSessionManager.onError("Tapped $number node(s)");
+// places hubble telescope model near world origin
+  Future<void> addHubble() async {
+    if (webObjectNode2 != null) {
+      _closeEndDrawer();
+    }
+    if (webObjectNode != null) {
+      arObjectManager.removeNode(webObjectNode!);
+      webObjectNode = null;
+    }
+    if (webObjectNode3 != null) {
+      arObjectManager.removeNode(webObjectNode3!);
+      webObjectNode3 = null;
+    }
+    var newNode = ARNode(
+        type: NodeType.webGLB,
+        uri:
+            "https://github.com/captainread/test-assets/blob/main/Hubble.glb?raw=true",
+        position: Vector3(0.0, 0.0, -0.2),
+        scale: Vector3(0.2, 0.2, 0.2));
+    bool? didAddWebNode = await arObjectManager.addNode(newNode);
+    webObjectNode2 = (didAddWebNode!) ? newNode : null;
+    _closeEndDrawer();
   }
 
+  // places earth model near world origin
+  Future<void> addEarth() async {
+    if (webObjectNode3 != null) {
+      _closeEndDrawer();
+    }
+    if (webObjectNode != null) {
+      arObjectManager.removeNode(webObjectNode!);
+      webObjectNode = null;
+    }
+    if (webObjectNode2 != null) {
+      arObjectManager.removeNode(webObjectNode2!);
+      webObjectNode2 = null;
+    }
+    var newNode = ARNode(
+        type: NodeType.webGLB,
+        uri:
+            "https://github.com/captainread/test-assets/blob/main/Earth4k.glb?raw=true",
+        position: Vector3(0.0, -0.0, -0.2),
+        scale: Vector3(0.2, 0.2, 0.2));
+    bool? didAddWebNode = await arObjectManager.addNode(newNode);
+    webObjectNode3 = (didAddWebNode!) ? newNode : null;
+    _closeEndDrawer();
+  }
+
+// handles placing earth on plane where tapped - not sure if we want this feature
   Future<void> onPlaneOrPointTapped(
       List<ARHitTestResult> hitTestResults) async {
     var singleHitTestResult = hitTestResults.firstWhere(
@@ -209,7 +273,6 @@ class _AugRealityState extends State<AugReality> {
       bool? didAddAnchor = await this.arAnchorManager!.addAnchor(newAnchor);
       if (didAddAnchor!) {
         this.anchors.add(newAnchor);
-        // Add node to anchor
         var newNode = ARNode(
             type: NodeType.webGLB,
             uri:
@@ -230,43 +293,43 @@ class _AugRealityState extends State<AugReality> {
     }
   }
 
-  Future<void> addMoon() async {
+// removes all models
+  Future<void> onRemoveEverything() async {
     if (webObjectNode != null) {
-      // arObjectManager.removeNode(webObjectNode!);
-      // webObjectNode = null;
-      _closeEndDrawer();
-    } else {
-      var newNode = ARNode(
-          type: NodeType.webGLB,
-          // targeting a GLB file stored online:
-          uri:
-              "https://github.com/captainread/test-assets/blob/main/Moon_1_3474.glb?raw=true",
-          // position of the object (I'm guessing compared to world origin):
-          position: Vector3(0.0, 0.0, 0.0),
-          // size of the object:
-          scale: Vector3(0.15, 0.15, 0.15));
-      bool? didAddWebNode = await arObjectManager.addNode(newNode);
-      webObjectNode = (didAddWebNode!) ? newNode : null;
-      // }
-      _closeEndDrawer();
+      arObjectManager.removeNode(webObjectNode!);
+      webObjectNode = null;
     }
+    if (webObjectNode2 != null) {
+      arObjectManager.removeNode(webObjectNode2!);
+      webObjectNode2 = null;
+    }
+    if (webObjectNode3 != null) {
+      arObjectManager.removeNode(webObjectNode3!);
+      webObjectNode3 = null;
+    }
+    nodes.forEach((node) {
+      this.arObjectManager.removeNode(node);
+    });
+    nodes = [];
+    anchors.forEach((anchor) {
+      this.arAnchorManager!.removeAnchor(anchor);
+    });
+    anchors = [];
+    _closeEndDrawer();
+  }
 
-    Future<void> addHubble() async {
-      if (webObjectNode2 != null) {
-        // arObjectManager.removeNode(webObjectNode2!);
-        // webObjectNode2 = null;
-        _closeEndDrawer();
-      } else {
-        var newNode = ARNode(
-            type: NodeType.webGLB,
-            uri:
-                "https://github.com/captainread/test-assets/blob/main/Hubble.glb?raw=true",
-            position: Vector3(0.1, 0.1, 0.1),
-            scale: Vector3(0.2, 0.2, 0.2));
-        bool? didAddWebNode = await arObjectManager.addNode(newNode);
-        webObjectNode2 = (didAddWebNode!) ? newNode : null;
-      }
-      _closeEndDrawer();
-    }
+// handles rotating models
+  onRotationStarted(String nodeName) {
+    print("Started rotating node " + nodeName);
+  }
+
+  onRotationChanged(String nodeName) {
+    print("Continued rotating node " + nodeName);
+  }
+
+  onRotationEnded(String nodeName, Matrix4 newTransform) {
+    print("Ended rotating node " + nodeName);
+    final rotatedNode =
+        this.nodes.firstWhere((element) => element.name == nodeName);
   }
 }
