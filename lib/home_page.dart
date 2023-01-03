@@ -12,15 +12,16 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: FittedBox(
-        fit: BoxFit.cover,
-        child: const Text('stAR.',
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: "MartianMono",
-              fontWeight: FontWeight.bold,
-            )),
-      )),
+            fit: BoxFit.cover,
+            child: const Text('stAR.',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: "MartianMono",
+                  fontWeight: FontWeight.bold,
+                )),
+          )),
       body: Center(
         child: Column(children: [
           ElevatedButton(
