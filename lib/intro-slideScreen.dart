@@ -66,7 +66,7 @@ class IntroSliderPageState extends State<IntroSliderPage> {
                   padding: const EdgeInsets.all(20),
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   child: Image.asset(
                     currentSlide.pathImage.toString(),
@@ -94,7 +94,7 @@ class IntroSliderPageState extends State<IntroSliderPage> {
                   child: Text(
                     currentSlide.description.toString(),
                     style: const TextStyle(
-                      color: Color.fromARGB(255, 0, 0, 0),
+                      color: Color.fromARGB(255, 255, 255, 255),
                       fontSize: 28,
                       height: 1.5,
                     ),
@@ -115,7 +115,7 @@ class IntroSliderPageState extends State<IntroSliderPage> {
   @override
   Widget build(BuildContext context) {
     return IntroSlider(
-      backgroundColorAllSlides: Color.fromARGB(255, 255, 255, 255),
+      backgroundColorAllSlides: Color.fromARGB(0, 0, 0, 0),
       renderSkipBtn: const Text(
         "Skip",
         style: TextStyle(color: Colors.amber),
@@ -129,7 +129,9 @@ class IntroSliderPageState extends State<IntroSliderPage> {
         style: TextStyle(color: Colors.white),
       ),
       colorDoneBtn: Colors.amber,
-      colorActiveDot: Color.fromARGB(255, 71, 70, 70),
+      colorActiveDot: Color.fromARGB(255, 240, 237, 237),
+      colorPrevBtn: Color.fromARGB(255, 240, 237, 237),
+      colorDot:  Color.fromARGB(255, 240, 237, 237),
       sizeDot: 8.0,
       typeDotAnimation: dotSliderAnimation.SIZE_TRANSITION,
       listCustomTabs: renderListCustomTabs(),
