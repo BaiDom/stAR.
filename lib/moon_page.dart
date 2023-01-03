@@ -7,7 +7,6 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:test_project/progress.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
