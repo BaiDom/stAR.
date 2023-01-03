@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:test_project/progress.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -132,9 +133,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   margin: const EdgeInsets.all(20),
                   padding: const EdgeInsets.all(10),
-                  child: Text(
-                    "Scanning the skies for your moon phase...\n\n 🌖 🌗 🌘 🌑 🌒 🌓 🌔",
-                    style: TextStyle(fontSize: 25, fontFamily: "MartianMono"),
+                  child: Container(
+                    child: Text(
+                      "Scanning the skies for your moon phase...\n\n 🌖 🌗 🌘 🌑 🌒 🌓 🌔",
+                      style: TextStyle(fontSize: 25, fontFamily: "MartianMono"),
+                    ),
                   ),
                 ),
                 Text(

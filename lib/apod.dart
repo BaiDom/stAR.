@@ -78,7 +78,7 @@ class _APODState extends State<APOD> {
       appBar: AppBar(
         title: FittedBox(
           fit: BoxFit.cover,
-          child: const Text('Astronomy Picture Of The Day',
+          child: const Text('stAR.Shot',
               style: TextStyle(
                 color: Colors.black,
                 fontFamily: "MartianMono",
