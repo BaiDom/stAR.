@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'intro-slideScreen.dart';
 import 'main.dart';
 
 @override
@@ -20,7 +21,7 @@ class _SplashState extends State<SplashPage> {
   _navigatetohome() async {
     await Future.delayed(Duration(milliseconds: 1500), () {});
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => RootPage()));
+        context, MaterialPageRoute(builder: (context) => IntroSliderPage()));
   }
 
   @override
