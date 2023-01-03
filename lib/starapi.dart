@@ -28,7 +28,7 @@ Future<String> postData(Position location) async {
       },
       "view": {
         "type": "constellation",
-        "parameters": {"constellation": "ori"}
+        "parameters": {"constellation": "aqr"}
       },
     }),
     headers: {
@@ -201,8 +201,8 @@ class _HomeScreenState extends State<StarAPI> {
               child: InteractiveViewer(
                 clipBehavior: Clip.none,
                 transformationController: controller,
-                panEnabled: false,
-                scaleEnabled: false,
+                panEnabled: true,
+                scaleEnabled: true,
                 child: AspectRatio(
                   aspectRatio: 1,
                   child: Image.network(imageUrl!,

@@ -132,9 +132,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   margin: const EdgeInsets.all(20),
                   padding: const EdgeInsets.all(10),
-                  child: Text(
-                    "Scanning the skies for your moon phase...\n\n 🌖 🌗 🌘 🌑 🌒 🌓 🌔",
-                    style: TextStyle(fontSize: 25, fontFamily: "MartianMono"),
+                  child: Container(
+                    child: Text(
+                      "Scanning the skies for your moon phase...\n\n 🌖 🌗 🌘 🌑 🌒 🌓 🌔",
+                      style: TextStyle(fontSize: 25, fontFamily: "MartianMono"),
+                    ),
                   ),
                 ),
                 Text(
@@ -161,8 +163,46 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         body: Center(
-          child: Image.network(imageUrl!,
-              height: 500, width: 375, fit: BoxFit.cover),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+                child: Image.network(imageUrl!,
+                    height: 500, width: 375, fit: BoxFit.cover),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 50, 10, 0),
+                child: RichText(
+                  text: TextSpan(
+                    children: const [
+                      TextSpan(
+                        text: 'Click the ',
+                        style: TextStyle(
+                          fontFamily: "MartianMono",
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                      WidgetSpan(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 2.0),
+                          child: Icon(Icons.view_in_ar, color: Colors.amber),
+                        ),
+                      ),
+                      TextSpan(
+                          text: ' button to see the Moon in Augmented Reality',
+                          style: TextStyle(
+                            fontFamily: "MartianMono",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          )),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
         ),
       );
     }
