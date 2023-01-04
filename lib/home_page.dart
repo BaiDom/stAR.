@@ -81,35 +81,7 @@ class HomePage extends StatelessWidget {
                   text: TextSpan(
                     children: const [
                       TextSpan(
-                          text: 'Click the ',
-                          style: TextStyle(
-                            fontFamily: "MartianMono",
-                            fontWeight: FontWeight.bold,
-                          )),
-                      WidgetSpan(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 2.0),
-                          child: Icon(Icons.star, color: Colors.amber),
-                        ),
-                      ),
-                      TextSpan(
-                          text:
-                              ' on the navigation bar to see the star map from your location',
-                          style: TextStyle(
-                            fontFamily: "MartianMono",
-                            fontWeight: FontWeight.bold,
-                          )),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 7.0, 4, 0),
-                child: RichText(
-                  text: TextSpan(
-                    children: const [
-                      TextSpan(
-                          text: 'Click the ',
+                          text: '- Click ',
                           style: TextStyle(
                             fontFamily: "MartianMono",
                             fontWeight: FontWeight.bold,
@@ -121,14 +93,72 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                          text:
-                              ' on the navigation bar to see the current Lunar phase',
+                          text: ' to see the star map from your location',
                           style: TextStyle(
                             fontFamily: "MartianMono",
                             fontWeight: FontWeight.bold,
                           )),
                     ],
                   ),
+                  // textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 7.0, 4, 0),
+                child: RichText(
+                  text: TextSpan(
+                    children: const [
+                      TextSpan(
+                          text: '- Click ',
+                          style: TextStyle(
+                            fontFamily: "MartianMono",
+                            fontWeight: FontWeight.bold,
+                          )),
+                      WidgetSpan(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 2.0),
+                          child: Icon(Icons.star, color: Colors.amber),
+                        ),
+                      ),
+                      TextSpan(
+                          text: ' to see the current Lunar phase',
+                          style: TextStyle(
+                            fontFamily: "MartianMono",
+                            fontWeight: FontWeight.bold,
+                          )),
+                    ],
+                  ),
+                  // textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 7.0, 4, 0),
+                child: RichText(
+                  text: TextSpan(
+                    children: const [
+                      TextSpan(
+                          text: '- Click ',
+                          style: TextStyle(
+                            fontFamily: "MartianMono",
+                            fontWeight: FontWeight.bold,
+                          )),
+                      WidgetSpan(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 2.0),
+                          child:
+                              Icon(Icons.view_in_ar_sharp, color: Colors.amber),
+                        ),
+                      ),
+                      TextSpan(
+                        text: ' to start exploring in Augmented Reality',
+                        style: TextStyle(
+                          fontFamily: "MartianMono",
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  // textAlign: TextAlign.center,
                 ),
               ),
               Row(children: const [Text(""), Spacer(), Text("")]),
