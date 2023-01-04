@@ -188,20 +188,34 @@ class _HomeScreenState extends State<StarAPI> {
           title: SingleChildScrollView(
             child: FittedBox(
               fit: BoxFit.scaleDown,
-              child: const Text('stAR.Map',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: "MartianMono",
-                    fontWeight: FontWeight.bold,
-                  )),
+              child: const Text(
+                'stAR.Map',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: "MartianMono",
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
         ),
         body: Center(
           child: Column(
             children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 20, 8, 0),
+                child: Text(
+                  "The Constellation of Aquarius",
+                  style: TextStyle(
+                    fontFamily: "MartianMono",
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
               Container(
-                margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                margin: EdgeInsets.fromLTRB(10, 30, 10, 15),
                 child: GestureDetector(
                   onDoubleTapDown: (details) => tapDownDetails = details,
                   onDoubleTap: () {
@@ -235,7 +249,43 @@ class _HomeScreenState extends State<StarAPI> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(8, 20, 8, 8),
+                padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+                child: Visibility(
+                  visible: _isVisible,
+                  child: RichText(
+                    text: TextSpan(
+                      children: const [
+                        TextSpan(
+                          text: 'Click ',
+                          style: TextStyle(
+                            fontFamily: "MartianMono",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                        WidgetSpan(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 2.0),
+                            child: Icon(Icons.view_in_ar_sharp,
+                                color: Colors.amber),
+                          ),
+                        ),
+                        TextSpan(
+                            text:
+                                ' to explore this Star map in Augmented Reality',
+                            style: TextStyle(
+                              fontFamily: "MartianMono",
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            )),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
                 child: Visibility(
                   visible: _isVisible,
                   child: ElevatedButton.icon(
