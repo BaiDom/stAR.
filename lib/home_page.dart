@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(8, 12, 8, 12),
                 child: Text(
                   "Explore the Universe in AR with stAR.",
                   style: TextStyle(
@@ -64,7 +64,10 @@ class HomePage extends StatelessWidget {
                   );
                 },
                 child: Text('Picture Of The Day',
-                    style: TextStyle(fontFamily: "MartianMono")),
+                    style: TextStyle(
+                      fontFamily: "MartianMono",
+                      fontWeight: FontWeight.bold,
+                    )),
               ),
               // Row(children: const [Text(""), Spacer(), Text("")]),
               Padding(
@@ -93,7 +96,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                          text: ' to see the star map from your location',
+                          text: ' to see the current Lunar phase',
                           style: TextStyle(
                             fontFamily: "MartianMono",
                             fontWeight: FontWeight.bold,
@@ -121,7 +124,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                          text: ' to see the current Lunar phase',
+                          text: ' to see the star map from your location',
                           style: TextStyle(
                             fontFamily: "MartianMono",
                             fontWeight: FontWeight.bold,
@@ -163,28 +166,64 @@ class HomePage extends StatelessWidget {
               ),
               Row(children: const [Text(""), Spacer(), Text("")]),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                child: Text("-FUN FACT-",
-                    style: TextStyle(
-                        fontFamily: "MartianMono",
+                padding: const EdgeInsets.fromLTRB(8, 20, 8, 8),
+                child: ElevatedButton.icon(
+                    onPressed: () {
+                      _showSimpleModalDialog(context);
+                    },
+                    icon: Icon(Icons.auto_awesome_outlined),
+                    label: Text(
+                      "Fun Fact",
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.amber)),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "On a really exceptional night, with no light pollution, you may be able to see 2000-2500 stars at any one time!",
-                  style: TextStyle(
-                    fontFamily: "MartianMono",
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
+                        fontSize: 15,
+                      ),
+                    )),
+              )
             ],
           ),
         ),
       ),
     );
   }
+}
+
+_showSimpleModalDialog(context) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+              side: BorderSide(color: Colors.amber)),
+          child: Container(
+            constraints: BoxConstraints(maxHeight: 130),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      children: const [
+                        TextSpan(
+                          text:
+                              "On a really exceptional night, with no light pollution, you may be able to see 2000-2500 stars at any one time!",
+                          style: TextStyle(
+                              fontFamily: "MartianMono",
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.white),
+                        ),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
 }

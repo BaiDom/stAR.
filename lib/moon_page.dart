@@ -178,12 +178,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 500, width: 375, fit: BoxFit.cover),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 50, 10, 100),
+                  padding: const EdgeInsets.fromLTRB(10, 35, 10, 20),
                   child: RichText(
                     text: TextSpan(
                       children: const [
                         TextSpan(
-                          text: 'Click the ',
+                          text: 'Click ',
                           style: TextStyle(
                             fontFamily: "MartianMono",
                             fontWeight: FontWeight.bold,
@@ -198,8 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         TextSpan(
-                            text:
-                                ' button to see the Moon in Augmented Reality',
+                            text: ' to explore the Moon in Augmented Reality',
                             style: TextStyle(
                               fontFamily: "MartianMono",
                               fontWeight: FontWeight.bold,
@@ -210,6 +209,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     textAlign: TextAlign.center,
                   ),
                 ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    _showSimpleModalDialog(context);
+                  },
+                  icon: Icon(Icons.auto_awesome_outlined),
+                  label: Text(
+                    "Fun Fact",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                )
               ],
             ),
           ),
@@ -217,4 +229,51 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
   }
+}
+
+_showSimpleModalDialog(context) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+              side: BorderSide(color: Colors.amber)),
+          child: Container(
+            constraints: BoxConstraints(maxHeight: 290),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      children: const [
+                        TextSpan(
+                          text: 'The Moon has quakes too!',
+                          style: TextStyle(
+                              fontFamily: "MartianMono",
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.amber),
+                        ),
+                        TextSpan(
+                            text:
+                                'They are not called earthquakes but moonquakes. They are caused by the gravitational influence of the Earth. Unlike quakes on Earth that last only a few minutes at most, moonquakes can last up to half an hour. They are much weaker than earthquakes though.',
+                            style: TextStyle(
+                              fontFamily: "MartianMono",
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                            )),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
 }
