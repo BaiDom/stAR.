@@ -45,7 +45,7 @@ class _RootPageState extends State<RootPage> {
     HomePage(),
     HomeScreen(),
     StarAPI(),
-    APOD(),
+    AugReality(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -63,19 +63,6 @@ class _RootPageState extends State<RootPage> {
       //   ),
       // ),
       body: pages[currentPage],
-      // Augmented Reality button here: -----------------------------
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                return const AugReality();
-              },
-            ),
-          );
-        },
-        child: Icon(Icons.view_in_ar),
-      ),
       bottomNavigationBar: NavigationBar(
         destinations: const [
           NavigationDestination(
@@ -89,6 +76,10 @@ class _RootPageState extends State<RootPage> {
           NavigationDestination(
             icon: Icon(Icons.star),
             label: 'star',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.view_in_ar_sharp),
+            label: 'AR',
           ),
         ],
         onDestinationSelected: (int index) {
