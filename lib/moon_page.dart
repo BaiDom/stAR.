@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.all(10),
                   child: Container(
                     child: Text(
-                      "Scanning the skies for your moon phase...\n\n 🌖 🌗 🌘 🌑 🌒 🌓 🌔",
+                      "Scanning the skies for your moon phase... 🌖 🌗 🌘 🌑 ",
                       style: TextStyle(fontSize: 25, fontFamily: "MartianMono"),
                     ),
                   ),
@@ -193,7 +193,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         WidgetSpan(
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 2.0),
-                            child: Icon(Icons.view_in_ar, color: Colors.amber),
+                            child: Icon(Icons.view_in_ar_sharp,
+                                color: Colors.amber),
                           ),
                         ),
                         TextSpan(
