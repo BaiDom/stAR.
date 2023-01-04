@@ -27,15 +27,16 @@ class _SplashState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Container(height: 100, width: 100, color: Colors.amber),
-      Text(
-        'stAR',
-        style: TextStyle(
-            fontSize: 24, fontWeight: FontWeight.bold, color: Colors.amber),
-      )
-    ])));
+      body: Center(
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Container(height: 100, width: 100, color: Colors.amber),
+          Text(
+            'stAR',
+            style: TextStyle(
+                fontSize: 24, fontWeight: FontWeight.bold, color: Colors.amber),
+          )
+        ]),
+      ),
+    );
   }
 }

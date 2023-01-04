@@ -73,7 +73,12 @@ class _APODState extends State<APOD> {
       );
     } else {
       body = Center(
-        child: Text('...loading 🔭 🔭 🔭'),
+        child: Text('...loading 🔭 🔭 🔭',
+            style: TextStyle(
+              fontSize: 25,
+              fontFamily: "MartianMono",
+              fontWeight: FontWeight.bold,
+            )),
       );
     }
     return Scaffold(

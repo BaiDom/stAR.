@@ -150,14 +150,23 @@ class _HomeScreenState extends State<StarAPI> {
                   padding: const EdgeInsets.all(10),
                   child: Text(
                     "Scanning the skies for your star map...  🌟 🌟 🌟",
-                    style: TextStyle(fontSize: 25, fontFamily: "MartianMono"),
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontFamily: "MartianMono",
+                    ),
                   ),
                 ),
                 Row(children: const [Text(""), Spacer(), Text("")]),
                 Text('LAT: ${_currentPosition?.latitude ?? ""}',
-                    style: TextStyle(fontSize: 25, fontFamily: "MartianMono")),
+                    style: TextStyle(
+                        fontSize: 25,
+                        fontFamily: "MartianMono",
+                        color: Colors.amber)),
                 Text('LNG: ${_currentPosition?.longitude ?? ""}',
-                    style: TextStyle(fontSize: 25, fontFamily: "MartianMono")),
+                    style: TextStyle(
+                        fontSize: 25,
+                        fontFamily: "MartianMono",
+                        color: Colors.amber)),
                 const SizedBox(height: 32),
               ],
             ),
