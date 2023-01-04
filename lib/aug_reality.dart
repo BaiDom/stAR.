@@ -39,6 +39,9 @@ class _AugRealityState extends State<AugReality> {
   ARNode? webObjectNode;
   ARNode? webObjectNode2;
   ARNode? webObjectNode3;
+  //Star chart
+  ARNode? webObjectNode4;
+
   List<ARAnchor> anchors = [];
   List<ARNode> nodes = [];
 
@@ -136,7 +139,13 @@ class _AugRealityState extends State<AugReality> {
                 icon: Icon(Icons.add_circle),
                 onPressed: () => addMoon(),
               ),
-              title: Text(' Moon'),
+              title: Text('Add Moon'),
+            ),ListTile(
+              leading: IconButton(
+                icon: Icon(Icons.add_circle),
+                onPressed: () => addStarsChart(),
+              ),
+              title: Text('Add Stars Chart'),
             ),
             ListTile(
               leading: IconButton(
@@ -291,6 +300,30 @@ class _AugRealityState extends State<AugReality> {
         this.arSessionManager.onError("Adding Anchor failed");
       }
     }
+  }
+
+  // Places star chart model
+  Future<void> addStarsChart() async {
+    if (webObjectNode != null) {
+      _closeEndDrawer();
+    }
+    if (webObjectNode2 != null) {
+      arObjectManager.removeNode(webObjectNode2!);
+      webObjectNode2 = null;
+    }
+    if (webObjectNode3 != null) {
+      arObjectManager.removeNode(webObjectNode3!);
+      webObjectNode3 = null;
+    }
+    var newNode = ARNode(
+        type: NodeType.webGLB,
+        uri:
+            "https://github.com/sondos-ahmed/glb-assets/blob/main/noDimantionStarChart.glb?raw=true",
+        position: Vector3(0.0, 0.0, -0.2),
+        scale: Vector3(0.15, 0.15, 0.15));
+    bool? didAddWebNode = await arObjectManager.addNode(newNode);
+    webObjectNode = (didAddWebNode!) ? newNode : null;
+    _closeEndDrawer();
   }
 
 // removes all models
