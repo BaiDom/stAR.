@@ -46,6 +46,15 @@ class _HomeScreenState extends State<StarAPI> {
   late TransformationController controller;
   TapDownDetails? tapDownDetails;
 
+  bool _isVisible = true;
+
+  @override
+  void hideButton() {
+    setState(() {
+      _isVisible = !_isVisible;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -189,39 +198,104 @@ class _HomeScreenState extends State<StarAPI> {
           ),
         ),
         body: Center(
-          child: Container(
-            margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child: GestureDetector(
-              onDoubleTapDown: (details) => tapDownDetails = details,
-              onDoubleTap: () {
-                final position = tapDownDetails!.localPosition;
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: GestureDetector(
+                  onDoubleTapDown: (details) => tapDownDetails = details,
+                  onDoubleTap: () {
+                    final position = tapDownDetails!.localPosition;
 
-                final double scale = 2.75;
-                final x = -position.dx * (scale - 1);
-                final y = -position.dy * (scale - 1);
-                final zoomed = Matrix4.identity()
-                  ..translate(x, y)
-                  ..scale(scale);
+                    final double scale = 2.75;
+                    final x = -position.dx * (scale - 1);
+                    final y = -position.dy * (scale - 1);
+                    final zoomed = Matrix4.identity()
+                      ..translate(x, y)
+                      ..scale(scale);
 
-                final value =
-                    controller.value.isIdentity() ? zoomed : Matrix4.identity();
-                controller.value = value;
-              },
-              child: InteractiveViewer(
-                clipBehavior: Clip.none,
-                transformationController: controller,
-                panEnabled: true,
-                scaleEnabled: true,
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: Image.network(imageUrl!,
-                      height: 600, width: 375, fit: BoxFit.cover),
+                    final value = controller.value.isIdentity()
+                        ? zoomed
+                        : Matrix4.identity();
+                    controller.value = value;
+
+                    hideButton();
+                  },
+                  child: InteractiveViewer(
+                    clipBehavior: Clip.none,
+                    transformationController: controller,
+                    panEnabled: true,
+                    scaleEnabled: true,
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Image.network(imageUrl!,
+                          height: 600, width: 375, fit: BoxFit.cover),
+                    ),
+                  ),
                 ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 20, 8, 8),
+                child: Visibility(
+                  visible: _isVisible,
+                  child: ElevatedButton.icon(
+                      onPressed: () {
+                        _showSimpleModalDialog(context);
+                      },
+                      icon: Icon(Icons.auto_awesome_outlined),
+                      label: Text(
+                        "Fun Fact",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      )),
+                ),
+              )
+            ],
           ),
         ),
       );
     }
   }
+}
+
+_showSimpleModalDialog(context) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+              side: BorderSide(color: Colors.amber)),
+          child: Container(
+            constraints: BoxConstraints(maxHeight: 170),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      children: const [
+                        TextSpan(
+                          text:
+                              "On a really exceptional night, with no light pollution, you may be able to see 2000-2500 stars at any one time!",
+                          style: TextStyle(
+                              fontFamily: "MartianMono",
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.white),
+                        ),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
 }

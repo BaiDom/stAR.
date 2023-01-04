@@ -31,7 +31,7 @@ class _SplashState extends State<SplashPage> {
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Image.asset('assets/images/logo-removebg.png'),
           Text(
-            'stAR',
+            'stAR.',
             style: TextStyle(
                 fontSize: 24, fontWeight: FontWeight.bold, color: Colors.amber),
           )

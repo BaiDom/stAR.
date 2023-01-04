@@ -173,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   child: Image.network(imageUrl!,
                       height: 500, width: 375, fit: BoxFit.cover),
                 ),
@@ -241,7 +241,7 @@ _showSimpleModalDialog(context) {
               borderRadius: BorderRadius.circular(20.0),
               side: BorderSide(color: Colors.amber)),
           child: Container(
-            constraints: BoxConstraints(maxHeight: 290),
+            constraints: BoxConstraints(maxHeight: 350),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
@@ -251,7 +251,7 @@ _showSimpleModalDialog(context) {
                     text: TextSpan(
                       children: const [
                         TextSpan(
-                          text: 'The Moon has quakes too!',
+                          text: 'The Moon has quakes too!                  ',
                           style: TextStyle(
                               fontFamily: "MartianMono",
                               fontWeight: FontWeight.bold,
