@@ -29,9 +29,17 @@ class _SplashState extends State<SplashPage> {
     return Scaffold(
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Container(height: 100, width: 100, color: Colors.amber),
+          Container(
+            height: 100,
+            width: 100,
+            color: Colors.amber,
+            child: Image(
+              image: AssetImage('assets/images/logo.png'),
+              fit: BoxFit.fill,
+            ),
+          ),
           Text(
-            'stAR',
+            'stAR.',
             style: TextStyle(
                 fontSize: 24, fontWeight: FontWeight.bold, color: Colors.amber),
           )
