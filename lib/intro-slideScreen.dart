@@ -20,21 +20,20 @@ class IntroSliderPageState extends State<IntroSliderPage> {
     slides.add(
       Slide(
         title: "Welcome!",
-        description:
-            "Let's try Augmented Reality. And get the best experience!",
+        description: "Hey there Space Cadet! Ready to explore the Cosmos?",
         pathImage: "assets/images/space.png",
       ),
     );
     slides.add(
       Slide(
         title: "AR",
-        description: "Explore the Moon in Augmented Reality!",
+        description: "Experience the Universe at your fingertips!",
         pathImage: "assets/images/virtualreality.png",
       ),
     );
     slides.add(
       Slide(
-        title: "Stars Map",
+        title: "Star Maps",
         description: "Gaze at the stars above you!",
         pathImage: "assets/images/universe.png",
       ),
@@ -42,7 +41,7 @@ class IntroSliderPageState extends State<IntroSliderPage> {
     slides.add(
       Slide(
         title: "Moon Phases",
-        description: "View up to the minute moon phase!",
+        description: "View up to the minute moon phases!",
         pathImage: "assets/images/solarsystem.png",
       ),
     );
@@ -131,7 +130,7 @@ class IntroSliderPageState extends State<IntroSliderPage> {
       colorDoneBtn: Colors.amber,
       colorActiveDot: Color.fromARGB(255, 240, 237, 237),
       colorPrevBtn: Color.fromARGB(255, 240, 237, 237),
-      colorDot:  Color.fromARGB(255, 240, 237, 237),
+      colorDot: Color.fromARGB(255, 240, 237, 237),
       sizeDot: 8.0,
       typeDotAnimation: dotSliderAnimation.SIZE_TRANSITION,
       listCustomTabs: renderListCustomTabs(),

@@ -198,7 +198,7 @@ _showSimpleModalDialog(context) {
               borderRadius: BorderRadius.circular(20.0),
               side: BorderSide(color: Colors.amber)),
           child: Container(
-            constraints: BoxConstraints(maxHeight: 130),
+            constraints: BoxConstraints(maxHeight: 200),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
@@ -209,7 +209,7 @@ _showSimpleModalDialog(context) {
                       children: const [
                         TextSpan(
                           text:
-                              "On a really exceptional night, with no light pollution, you may be able to see 2000-2500 stars at any one time!",
+                              "Stars shine because they are hot balls of glowing plasma, held together by their own gravity, nuclear fusion is going on inside them and generating light.",
                           style: TextStyle(
                               fontFamily: "MartianMono",
                               fontWeight: FontWeight.bold,
