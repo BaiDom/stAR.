@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "Click the button below to see a cool new astronomy picture every day!",
+                  "Click the button below to see an awesome new astronomy picture every day!",
                   style: TextStyle(
                       fontFamily: "MartianMono",
                       fontWeight: FontWeight.bold,
