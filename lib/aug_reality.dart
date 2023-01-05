@@ -35,14 +35,13 @@ class _AugRealityState extends State<AugReality> {
     Navigator.of(context).pop();
   }
 
-  ARNode? webObjectNode;
-  ARNode? webObjectNode2;
-  ARNode? webObjectNode3;
-  ARNode? webObjectNode4;
-  ARNode? webObjectNode5;
-  ARNode? webObjectNode6;
-  ARNode? webObjectNode7;
-  ARNode? webObjectNode8;
+  ARNode? starNode;
+  ARNode? earthNode;
+  ARNode? moonNode;
+  ARNode? hubbleNode;
+  ARNode? marsNode;
+  ARNode? venusNode;
+  ARNode? jupiterNode;
 
   List<ARAnchor> anchors = [];
   List<ARNode> nodes = [];
@@ -108,7 +107,7 @@ class _AugRealityState extends State<AugReality> {
                       ),
                       content: Wrap(children: [
                         Text(
-                            'Please pan your camera around until planes (flat surfaces) have been detected around you. These are indicated by dotted fields.\n\nUse the right-hand menu to add 3D models to the scene. Some models will be placed for you. Others can be placed by tapping on the planes.\n\nTo rotate, tap the placed model - you will see a selection circle. Then press both thumbs (or two fingers) to the screen and swirl them clockwise or anti-clockwise.'),
+                            'While staying in one place, please slowly pan your camera around you until the pan animation disappears. \n\nUse the right-hand menu to add 3D models to the scene. These models should spawn somewhere in front of you. You can also tap a surface around you to spawn a bonus model. \n\nTo rotate, tap the model - you will see a selection circle. Then press both thumbs (or two fingers) to the screen and swirl them clockwise or anti-clockwise.'),
                         Image.asset('assets/images/rotate.png'),
                       ]),
                       actions: <Widget>[
@@ -142,27 +141,23 @@ class _AugRealityState extends State<AugReality> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.amber,
+            SizedBox(
+              height: 110,
+              child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.amber,
+                ),
+                child: Text('Add 3D models.',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: "MartianMono",
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold)),
               ),
-              child: Text('Add 3D models to your scene.',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: "MartianMono",
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold)),
             ),
             ListTile(
               title: Text(
                   'Press the + buttons to add models to the scene.\n\nPlease wait a moment for your model to load. This menu will close once it has loaded.'),
-            ),
-            ListTile(
-              leading: IconButton(
-                icon: Icon(Icons.add_circle),
-                onPressed: () => addMoon(),
-              ),
-              title: Text('Add Moon'),
             ),
             ListTile(
               leading: IconButton(
@@ -174,16 +169,23 @@ class _AugRealityState extends State<AugReality> {
             ListTile(
               leading: IconButton(
                 icon: Icon(Icons.add_circle),
-                onPressed: () => addHubble(),
+                onPressed: () => addEarth(),
               ),
-              title: Text('Add Hubble Telescope'),
+              title: Text('Add Earth'),
             ),
             ListTile(
               leading: IconButton(
                 icon: Icon(Icons.add_circle),
-                onPressed: () => addEarth(),
+                onPressed: () => addMoon(),
               ),
-              title: Text('Add Earth'),
+              title: Text('Add Moon'),
+            ),
+            ListTile(
+              leading: IconButton(
+                icon: Icon(Icons.add_circle),
+                onPressed: () => addHubble(),
+              ),
+              title: Text('Add Hubble Telescope'),
             ),
             ListTile(
               leading: IconButton(
@@ -238,109 +240,41 @@ class _AugRealityState extends State<AugReality> {
         );
     this.arObjectManager.onInitialize();
 
-    // this.arSessionManager.onPlaneOrPointTap = onPlaneOrPointTapped;
+    this.arSessionManager.onPlaneOrPointTap = onPlaneOrPointTapped;
     this.arObjectManager.onRotationStart = onRotationStarted;
     this.arObjectManager.onRotationChange = onRotationChanged;
     this.arObjectManager.onRotationEnd = onRotationEnded;
   }
 
-  Future<void> addMoon() async {
-    if (webObjectNode != null) {
-      _closeEndDrawer();
-    }
-    if (webObjectNode2 != null) {
-      arObjectManager.removeNode(webObjectNode2!);
-      webObjectNode2 = null;
-    }
-    if (webObjectNode3 != null) {
-      arObjectManager.removeNode(webObjectNode3!);
-      webObjectNode3 = null;
-    }
-    if (webObjectNode4 != null) {
-      arObjectManager.removeNode(webObjectNode4!);
-      webObjectNode4 = null;
-    }
-    var newNode = ARNode(
-        type: NodeType.webGLB,
-        uri:
-            "https://github.com/captainread/test-assets/blob/main/the_moon_sharp.glb?raw=true",
-        position: Vector3(0.0, 0.0, -0.2),
-        scale: Vector3(0.2, 0.2, 0.2));
-    bool? didAddWebNode = await arObjectManager.addNode(newNode);
-    webObjectNode = (didAddWebNode!) ? newNode : null;
-    _closeEndDrawer();
-  }
-
-  Future<void> addHubble() async {
-    if (webObjectNode2 != null) {
-      _closeEndDrawer();
-    }
-    if (webObjectNode != null) {
-      arObjectManager.removeNode(webObjectNode!);
-      webObjectNode = null;
-    }
-    if (webObjectNode3 != null) {
-      arObjectManager.removeNode(webObjectNode3!);
-      webObjectNode3 = null;
-    }
-    if (webObjectNode4 != null) {
-      arObjectManager.removeNode(webObjectNode4!);
-      webObjectNode4 = null;
-    }
-    var newNode = ARNode(
-        type: NodeType.webGLB,
-        uri:
-            "https://github.com/captainread/test-assets/blob/main/Hubble.glb?raw=true",
-        position: Vector3(0.0, 0.0, -0.2),
-        scale: Vector3(0.2, 0.2, 0.2));
-    bool? didAddWebNode = await arObjectManager.addNode(newNode);
-    webObjectNode2 = (didAddWebNode!) ? newNode : null;
-    _closeEndDrawer();
-  }
-
-  Future<void> addEarth() async {
-    if (webObjectNode3 != null) {
-      _closeEndDrawer();
-    }
-    if (webObjectNode != null) {
-      arObjectManager.removeNode(webObjectNode!);
-      webObjectNode = null;
-    }
-    if (webObjectNode2 != null) {
-      arObjectManager.removeNode(webObjectNode2!);
-      webObjectNode2 = null;
-    }
-    if (webObjectNode4 != null) {
-      arObjectManager.removeNode(webObjectNode4!);
-      webObjectNode4 = null;
-    }
-    var newNode = ARNode(
-        type: NodeType.webGLB,
-        uri:
-            "https://github.com/captainread/test-assets/blob/main/Earth4k.glb?raw=true",
-        position: Vector3(0.0, -0.0, -0.2),
-        scale: Vector3(0.2, 0.2, 0.2));
-    bool? didAddWebNode = await arObjectManager.addNode(newNode);
-    webObjectNode3 = (didAddWebNode!) ? newNode : null;
-    _closeEndDrawer();
-  }
-
   Future<void> addStarsChart() async {
-    if (webObjectNode4 != null) {
+    if (starNode != null) {
       _closeEndDrawer();
     }
-    if (webObjectNode != null) {
-      arObjectManager.removeNode(webObjectNode!);
-      webObjectNode = null;
+    if (earthNode != null) {
+      arObjectManager.removeNode(earthNode!);
+      earthNode = null;
     }
-    if (webObjectNode2 != null) {
-      arObjectManager.removeNode(webObjectNode2!);
-      webObjectNode2 = null;
+    if (moonNode != null) {
+      arObjectManager.removeNode(moonNode!);
+      moonNode = null;
     }
-    if (webObjectNode3 != null) {
-      arObjectManager.removeNode(webObjectNode3!);
-      webObjectNode3 = null;
+    if (hubbleNode != null) {
+      arObjectManager.removeNode(hubbleNode!);
+      hubbleNode = null;
     }
+    if (marsNode != null) {
+      arObjectManager.removeNode(marsNode!);
+      marsNode = null;
+    }
+    if (venusNode != null) {
+      arObjectManager.removeNode(venusNode!);
+      venusNode = null;
+    }
+    if (jupiterNode != null) {
+      arObjectManager.removeNode(jupiterNode!);
+      jupiterNode = null;
+    }
+
     var newNode = ARNode(
         type: NodeType.webGLB,
         uri:
@@ -348,139 +282,308 @@ class _AugRealityState extends State<AugReality> {
         position: Vector3(0.0, 0.0, -0.2),
         scale: Vector3(0.15, 0.15, 0.15));
     bool? didAddWebNode = await arObjectManager.addNode(newNode);
-    webObjectNode = (didAddWebNode!) ? newNode : null;
+    starNode = (didAddWebNode!) ? newNode : null;
+    _closeEndDrawer();
+  }
+
+  Future<void> addEarth() async {
+    if (earthNode != null) {
+      _closeEndDrawer();
+    }
+    if (starNode != null) {
+      arObjectManager.removeNode(starNode!);
+      starNode = null;
+    }
+    if (moonNode != null) {
+      arObjectManager.removeNode(moonNode!);
+      moonNode = null;
+    }
+    if (hubbleNode != null) {
+      arObjectManager.removeNode(hubbleNode!);
+      hubbleNode = null;
+    }
+    if (marsNode != null) {
+      arObjectManager.removeNode(marsNode!);
+      marsNode = null;
+    }
+    if (venusNode != null) {
+      arObjectManager.removeNode(venusNode!);
+      venusNode = null;
+    }
+    if (jupiterNode != null) {
+      arObjectManager.removeNode(jupiterNode!);
+      jupiterNode = null;
+    }
+
+    var newNode = ARNode(
+        type: NodeType.webGLB,
+        uri:
+            "https://github.com/captainread/test-assets/blob/main/earth.glb?raw=true",
+        position: Vector3(0.0, -0.2, -0.5),
+        scale: Vector3(0.3, 0.3, 0.3));
+    bool? didAddWebNode = await arObjectManager.addNode(newNode);
+    earthNode = (didAddWebNode!) ? newNode : null;
+    _closeEndDrawer();
+  }
+
+  Future<void> addMoon() async {
+    if (moonNode != null) {
+      _closeEndDrawer();
+    }
+    if (starNode != null) {
+      arObjectManager.removeNode(starNode!);
+      starNode = null;
+    }
+    if (earthNode != null) {
+      arObjectManager.removeNode(earthNode!);
+      earthNode = null;
+    }
+    if (hubbleNode != null) {
+      arObjectManager.removeNode(hubbleNode!);
+      hubbleNode = null;
+    }
+    if (marsNode != null) {
+      arObjectManager.removeNode(marsNode!);
+      marsNode = null;
+    }
+    if (venusNode != null) {
+      arObjectManager.removeNode(venusNode!);
+      venusNode = null;
+    }
+    if (jupiterNode != null) {
+      arObjectManager.removeNode(jupiterNode!);
+      jupiterNode = null;
+    }
+
+    var newNode = ARNode(
+        type: NodeType.webGLB,
+        uri:
+            "https://github.com/captainread/test-assets/blob/main/the_moon_sharp.glb?raw=true",
+        position: Vector3(0.0, -0.2, -0.5),
+        scale: Vector3(0.3, 0.3, 0.3));
+    bool? didAddWebNode = await arObjectManager.addNode(newNode);
+    moonNode = (didAddWebNode!) ? newNode : null;
+    _closeEndDrawer();
+  }
+
+  Future<void> addHubble() async {
+    if (hubbleNode != null) {
+      _closeEndDrawer();
+    }
+    if (starNode != null) {
+      arObjectManager.removeNode(starNode!);
+      starNode = null;
+    }
+    if (earthNode != null) {
+      arObjectManager.removeNode(earthNode!);
+      earthNode = null;
+    }
+    if (moonNode != null) {
+      arObjectManager.removeNode(moonNode!);
+      moonNode = null;
+    }
+    if (marsNode != null) {
+      arObjectManager.removeNode(marsNode!);
+      marsNode = null;
+    }
+    if (venusNode != null) {
+      arObjectManager.removeNode(venusNode!);
+      venusNode = null;
+    }
+    if (jupiterNode != null) {
+      arObjectManager.removeNode(jupiterNode!);
+      jupiterNode = null;
+    }
+
+    var newNode = ARNode(
+        type: NodeType.webGLB,
+        uri:
+            "https://github.com/captainread/test-assets/blob/main/Hubble.glb?raw=true",
+        position: Vector3(0.0, -0.2, -0.5),
+        scale: Vector3(0.3, 0.3, 0.3));
+    bool? didAddWebNode = await arObjectManager.addNode(newNode);
+    hubbleNode = (didAddWebNode!) ? newNode : null;
     _closeEndDrawer();
   }
 
   Future<void> addMars() async {
-    if (webObjectNode5 != null) {
+    if (marsNode != null) {
       _closeEndDrawer();
     }
-    if (webObjectNode != null) {
-      arObjectManager.removeNode(webObjectNode!);
-      webObjectNode = null;
+    if (starNode != null) {
+      arObjectManager.removeNode(starNode!);
+      starNode = null;
     }
-    if (webObjectNode2 != null) {
-      arObjectManager.removeNode(webObjectNode2!);
-      webObjectNode2 = null;
+    if (earthNode != null) {
+      arObjectManager.removeNode(earthNode!);
+      earthNode = null;
     }
-    if (webObjectNode3 != null) {
-      arObjectManager.removeNode(webObjectNode3!);
-      webObjectNode3 = null;
+    if (moonNode != null) {
+      arObjectManager.removeNode(moonNode!);
+      moonNode = null;
     }
+    if (hubbleNode != null) {
+      arObjectManager.removeNode(hubbleNode!);
+      hubbleNode = null;
+    }
+    if (venusNode != null) {
+      arObjectManager.removeNode(venusNode!);
+      venusNode = null;
+    }
+    if (jupiterNode != null) {
+      arObjectManager.removeNode(jupiterNode!);
+      jupiterNode = null;
+    }
+
     var newNode = ARNode(
         type: NodeType.webGLB,
         uri:
             "https://github.com/captainread/test-assets/blob/main/mars.glb?raw=true",
-        position: Vector3(0.0, 0.0, -0.2),
-        scale: Vector3(0.2, 0.2, 0.2));
+        position: Vector3(0.0, -0.2, -0.5),
+        scale: Vector3(0.3, 0.3, 0.3));
     bool? didAddWebNode = await arObjectManager.addNode(newNode);
-    webObjectNode = (didAddWebNode!) ? newNode : null;
+    marsNode = (didAddWebNode!) ? newNode : null;
     _closeEndDrawer();
   }
 
   Future<void> addVenus() async {
-    if (webObjectNode5 != null) {
+    if (venusNode != null) {
       _closeEndDrawer();
     }
-    if (webObjectNode != null) {
-      arObjectManager.removeNode(webObjectNode!);
-      webObjectNode = null;
+    if (starNode != null) {
+      arObjectManager.removeNode(starNode!);
+      starNode = null;
     }
-    if (webObjectNode2 != null) {
-      arObjectManager.removeNode(webObjectNode2!);
-      webObjectNode2 = null;
+    if (earthNode != null) {
+      arObjectManager.removeNode(earthNode!);
+      earthNode = null;
     }
-    if (webObjectNode3 != null) {
-      arObjectManager.removeNode(webObjectNode3!);
-      webObjectNode3 = null;
+    if (moonNode != null) {
+      arObjectManager.removeNode(moonNode!);
+      moonNode = null;
     }
+    if (hubbleNode != null) {
+      arObjectManager.removeNode(hubbleNode!);
+      hubbleNode = null;
+    }
+    if (marsNode != null) {
+      arObjectManager.removeNode(marsNode!);
+      marsNode = null;
+    }
+    if (jupiterNode != null) {
+      arObjectManager.removeNode(jupiterNode!);
+      jupiterNode = null;
+    }
+
     var newNode = ARNode(
         type: NodeType.webGLB,
         uri:
             "https://github.com/captainread/test-assets/blob/main/venus.glb?raw=true",
-        position: Vector3(0.0, 0.0, -0.2),
-        scale: Vector3(0.2, 0.2, 0.2));
+        position: Vector3(0.0, -0.2, -0.5),
+        scale: Vector3(0.3, 0.3, 0.3));
     bool? didAddWebNode = await arObjectManager.addNode(newNode);
-    webObjectNode = (didAddWebNode!) ? newNode : null;
+    venusNode = (didAddWebNode!) ? newNode : null;
     _closeEndDrawer();
   }
 
   Future<void> addJupiter() async {
-    if (webObjectNode5 != null) {
+    if (jupiterNode != null) {
       _closeEndDrawer();
     }
-    if (webObjectNode != null) {
-      arObjectManager.removeNode(webObjectNode!);
-      webObjectNode = null;
+    if (starNode != null) {
+      arObjectManager.removeNode(starNode!);
+      starNode = null;
     }
-    if (webObjectNode2 != null) {
-      arObjectManager.removeNode(webObjectNode2!);
-      webObjectNode2 = null;
+    if (earthNode != null) {
+      arObjectManager.removeNode(earthNode!);
+      earthNode = null;
     }
-    if (webObjectNode3 != null) {
-      arObjectManager.removeNode(webObjectNode3!);
-      webObjectNode3 = null;
+    if (moonNode != null) {
+      arObjectManager.removeNode(moonNode!);
+      moonNode = null;
+    }
+    if (hubbleNode != null) {
+      arObjectManager.removeNode(hubbleNode!);
+      hubbleNode = null;
+    }
+    if (marsNode != null) {
+      arObjectManager.removeNode(marsNode!);
+      marsNode = null;
+    }
+    if (venusNode != null) {
+      arObjectManager.removeNode(venusNode!);
+      venusNode = null;
     }
     var newNode = ARNode(
         type: NodeType.webGLB,
         uri:
             "https://github.com/captainread/test-assets/blob/main/jupiter.glb?raw=true",
-        position: Vector3(0.0, 0.0, -0.2),
-        scale: Vector3(0.2, 0.2, 0.2));
+        position: Vector3(0.0, -0.2, -0.5),
+        scale: Vector3(0.3, 0.3, 0.3));
     bool? didAddWebNode = await arObjectManager.addNode(newNode);
-    webObjectNode = (didAddWebNode!) ? newNode : null;
+    jupiterNode = (didAddWebNode!) ? newNode : null;
     _closeEndDrawer();
   }
 
-// handles placing earth on plane where tapped - not sure if we want this feature
-  // Future<void> onPlaneOrPointTapped(
-  //     List<ARHitTestResult> hitTestResults) async {
-  //   var singleHitTestResult = hitTestResults.firstWhere(
-  //       (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
-  //   if (singleHitTestResult != null) {
-  //     var newAnchor =
-  //         ARPlaneAnchor(transformation: singleHitTestResult.worldTransform);
-  //     bool? didAddAnchor = await this.arAnchorManager!.addAnchor(newAnchor);
-  //     if (didAddAnchor!) {
-  //       this.anchors.add(newAnchor);
-  //       var newNode = ARNode(
-  //           type: NodeType.webGLB,
-  //           uri:
-  //               "https://github.com/captainread/test-assets/blob/main/Earth4k.glb?raw=true",
-  //           scale: Vector3(0.3, 0.3, 0.3),
-  //           position: Vector3(0.0, 0.0, 0.0),
-  //           rotation: Vector4(1.0, 0.0, 0.0, 0.0));
-  //       bool? didAddNodeToAnchor =
-  //           await this.arObjectManager.addNode(newNode, planeAnchor: newAnchor);
-  //       if (didAddNodeToAnchor!) {
-  //         this.nodes.add(newNode);
-  //       } else {
-  //         this.arSessionManager.onError("Adding Node to Anchor failed");
-  //       }
-  //     } else {
-  //       this.arSessionManager.onError("Adding Anchor failed");
-  //     }
-  //   }
-  // }
+  Future<void> onPlaneOrPointTapped(
+      List<ARHitTestResult> hitTestResults) async {
+    var singleHitTestResult = hitTestResults.firstWhere(
+        (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
+    if (singleHitTestResult != null) {
+      var newAnchor =
+          ARPlaneAnchor(transformation: singleHitTestResult.worldTransform);
+      bool? didAddAnchor = await this.arAnchorManager!.addAnchor(newAnchor);
+      if (didAddAnchor!) {
+        this.anchors.add(newAnchor);
+        var newNode = ARNode(
+            type: NodeType.webGLB,
+            uri:
+                "https://github.com/captainread/test-assets/blob/main/Curiosity_static.glb?raw=true",
+            scale: Vector3(0.3, 0.3, 0.3),
+            position: Vector3(0.0, 0.0, 0.0),
+            rotation: Vector4(1.0, 0.0, 0.0, 0.0));
+        bool? didAddNodeToAnchor =
+            await this.arObjectManager.addNode(newNode, planeAnchor: newAnchor);
+        if (didAddNodeToAnchor!) {
+          this.nodes.add(newNode);
+        } else {
+          this.arSessionManager.onError("Adding Node to Anchor failed");
+        }
+      } else {
+        this.arSessionManager.onError("Adding Anchor failed");
+      }
+    }
+  }
 
 // removes all models
   Future<void> onRemoveEverything() async {
-    if (webObjectNode != null) {
-      arObjectManager.removeNode(webObjectNode!);
-      webObjectNode = null;
+    if (starNode != null) {
+      arObjectManager.removeNode(starNode!);
+      starNode = null;
     }
-    if (webObjectNode2 != null) {
-      arObjectManager.removeNode(webObjectNode2!);
-      webObjectNode2 = null;
+    if (earthNode != null) {
+      arObjectManager.removeNode(earthNode!);
+      earthNode = null;
     }
-    if (webObjectNode3 != null) {
-      arObjectManager.removeNode(webObjectNode3!);
-      webObjectNode3 = null;
+    if (moonNode != null) {
+      arObjectManager.removeNode(moonNode!);
+      moonNode = null;
     }
-    if (webObjectNode4 != null) {
-      arObjectManager.removeNode(webObjectNode4!);
-      webObjectNode4 = null;
+    if (hubbleNode != null) {
+      arObjectManager.removeNode(hubbleNode!);
+      hubbleNode = null;
+    }
+    if (marsNode != null) {
+      arObjectManager.removeNode(marsNode!);
+      marsNode = null;
+    }
+    if (venusNode != null) {
+      arObjectManager.removeNode(venusNode!);
+      venusNode = null;
+    }
+    if (jupiterNode != null) {
+      arObjectManager.removeNode(jupiterNode!);
+      jupiterNode = null;
     }
     nodes.forEach((node) {
       this.arObjectManager.removeNode(node);
