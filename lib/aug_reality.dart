@@ -35,11 +35,9 @@ class _AugRealityState extends State<AugReality> {
     Navigator.of(context).pop();
   }
 
-  // String webObjectReference
   ARNode? webObjectNode;
   ARNode? webObjectNode2;
   ARNode? webObjectNode3;
-  //Star chart
   ARNode? webObjectNode4;
 
   List<ARAnchor> anchors = [];
@@ -72,7 +70,7 @@ class _AugRealityState extends State<AugReality> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * .8,
+              height: MediaQuery.of(context).size.height * .7,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(22),
                 child: ARView(
@@ -132,7 +130,7 @@ class _AugRealityState extends State<AugReality> {
             ),
             ListTile(
               title: Text(
-                  'Press the + buttons to add models to the scene.\n\nPlease wait a moment for your model to load: this menu will close once it has loaded.'),
+                  'Press the + buttons to add models to the scene.\n\nPlease wait a moment for your model to load. This menu will close once it has loaded.'),
             ),
             ListTile(
               leading: IconButton(
@@ -140,12 +138,13 @@ class _AugRealityState extends State<AugReality> {
                 onPressed: () => addMoon(),
               ),
               title: Text('Add Moon'),
-            ),ListTile(
+            ),
+            ListTile(
               leading: IconButton(
                 icon: Icon(Icons.add_circle),
                 onPressed: () => addStarsChart(),
               ),
-              title: Text('Add Stars Chart'),
+              title: Text('Add Star Chart'),
             ),
             ListTile(
               leading: IconButton(
@@ -212,6 +211,10 @@ class _AugRealityState extends State<AugReality> {
       arObjectManager.removeNode(webObjectNode3!);
       webObjectNode3 = null;
     }
+    if (webObjectNode4 != null) {
+      arObjectManager.removeNode(webObjectNode4!);
+      webObjectNode4 = null;
+    }
     var newNode = ARNode(
         type: NodeType.webGLB,
         uri:
@@ -235,6 +238,10 @@ class _AugRealityState extends State<AugReality> {
     if (webObjectNode3 != null) {
       arObjectManager.removeNode(webObjectNode3!);
       webObjectNode3 = null;
+    }
+    if (webObjectNode4 != null) {
+      arObjectManager.removeNode(webObjectNode4!);
+      webObjectNode4 = null;
     }
     var newNode = ARNode(
         type: NodeType.webGLB,
@@ -260,6 +267,10 @@ class _AugRealityState extends State<AugReality> {
       arObjectManager.removeNode(webObjectNode2!);
       webObjectNode2 = null;
     }
+    if (webObjectNode4 != null) {
+      arObjectManager.removeNode(webObjectNode4!);
+      webObjectNode4 = null;
+    }
     var newNode = ARNode(
         type: NodeType.webGLB,
         uri:
@@ -268,6 +279,34 @@ class _AugRealityState extends State<AugReality> {
         scale: Vector3(0.2, 0.2, 0.2));
     bool? didAddWebNode = await arObjectManager.addNode(newNode);
     webObjectNode3 = (didAddWebNode!) ? newNode : null;
+    _closeEndDrawer();
+  }
+
+  // Places star chart model
+  Future<void> addStarsChart() async {
+    if (webObjectNode4 != null) {
+      _closeEndDrawer();
+    }
+    if (webObjectNode != null) {
+      arObjectManager.removeNode(webObjectNode!);
+      webObjectNode = null;
+    }
+    if (webObjectNode2 != null) {
+      arObjectManager.removeNode(webObjectNode2!);
+      webObjectNode2 = null;
+    }
+    if (webObjectNode3 != null) {
+      arObjectManager.removeNode(webObjectNode3!);
+      webObjectNode3 = null;
+    }
+    var newNode = ARNode(
+        type: NodeType.webGLB,
+        uri:
+            "https://github.com/sondos-ahmed/glb-assets/blob/main/noDimantionStarChart.glb?raw=true",
+        position: Vector3(0.0, 0.0, -0.2),
+        scale: Vector3(0.15, 0.15, 0.15));
+    bool? didAddWebNode = await arObjectManager.addNode(newNode);
+    webObjectNode = (didAddWebNode!) ? newNode : null;
     _closeEndDrawer();
   }
 
@@ -302,30 +341,6 @@ class _AugRealityState extends State<AugReality> {
     }
   }
 
-  // Places star chart model
-  Future<void> addStarsChart() async {
-    if (webObjectNode != null) {
-      _closeEndDrawer();
-    }
-    if (webObjectNode2 != null) {
-      arObjectManager.removeNode(webObjectNode2!);
-      webObjectNode2 = null;
-    }
-    if (webObjectNode3 != null) {
-      arObjectManager.removeNode(webObjectNode3!);
-      webObjectNode3 = null;
-    }
-    var newNode = ARNode(
-        type: NodeType.webGLB,
-        uri:
-            "https://github.com/sondos-ahmed/glb-assets/blob/main/noDimantionStarChart.glb?raw=true",
-        position: Vector3(0.0, 0.0, -0.2),
-        scale: Vector3(0.15, 0.15, 0.15));
-    bool? didAddWebNode = await arObjectManager.addNode(newNode);
-    webObjectNode = (didAddWebNode!) ? newNode : null;
-    _closeEndDrawer();
-  }
-
 // removes all models
   Future<void> onRemoveEverything() async {
     if (webObjectNode != null) {
@@ -339,6 +354,10 @@ class _AugRealityState extends State<AugReality> {
     if (webObjectNode3 != null) {
       arObjectManager.removeNode(webObjectNode3!);
       webObjectNode3 = null;
+    }
+    if (webObjectNode4 != null) {
+      arObjectManager.removeNode(webObjectNode4!);
+      webObjectNode4 = null;
     }
     nodes.forEach((node) {
       this.arObjectManager.removeNode(node);
