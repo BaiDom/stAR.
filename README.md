@@ -47,7 +47,7 @@ Note: In your terminal, keyboard shortcuts will be shown for the emulator.
 ## Minimum System Requirements:
 + Android: 12
 + Android SDK: 24
-+ ar_flutter_plugin: 0.7.3
++ AR_flutter_plugin: 0.7.3
 + DART: Between 2.18.5 and 3.0.0
 + Flutter: 3.0.0
 
