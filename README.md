@@ -1,5 +1,10 @@
+<img src="android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" align="right" />
+
 # stAR.
-## Jet off and see the stars without even having to leave the ground. 
+
+StAR is an Android app that leverages Augmented Reality to let users explore and experience space related content from their phones. Using the device's geolocation, the app requests APIs to show the moon phases, star chart and astronomy image of the day, along with fun facts about space. The star chart model was created using Three JS to be dispalyed via AR. Other amazing 3D models that the user can explore via AR include the Earth, the Moon, Mars, Venus, Jupiter, Hubble Space Telescope and the Curiosity Rover.
+
+### Jet off and see the stars without even having to leave the ground. 
 
 + Look at your location's star map without needing a telescope.
 + Bring the moon to you with augmented reality.
@@ -27,17 +32,19 @@ Note: In your terminal, keyboard shortcuts will be shown for the emulator.
 
 ## Software used:
 [![VSCode]][VSCode-url]
-<br> [![DART]][DART-url]
-<br> [![Flutter]][Flutter-url]
-<br> [![ar_flutter]][ar_flutter-url]
 <br> [![Android]][Android-url]
+<br> [![Flutter]][Flutter-url]
+<br> [![DART]][DART-url]
+<br> [![ar_flutter]][ar_flutter-url]
+<br> [![Three-JS]][Three-JS-url]
+<br> [![GitHub]][GitHub-url]
 <br> [![Insomnia]][Insmonia-url]
 
-## API used:
+## API:
 [![StarMap]][StarMap-url]
 <br> [![NASA]][NASA-url]
 
-## Minimum Requirements:
+## Minimum System Requirements:
 + Android: 12
 + Android SDK: 24
 + ar_flutter_plugin: 0.7.3
@@ -51,20 +58,38 @@ Note: In your terminal, keyboard shortcuts will be shown for the emulator.
 <br> [![Anwar]][Anwar]
 <br> [![Alice]][Alice-url]
 
+## Credits
+This software uses:
+- AR sticker: <a href="10 Free vr glasses Stickers for download in SVG, PNG formats | Flaticon" title="vr glasses stickers">Vr glasses stickers created by kerismaker - Flaticon</a>
+
+- Moon phases sticker: <a href="407 Free house Stickers for download in SVG, PNG formats | Flaticon" title="house stickers">House stickers created by Stickers - Flaticon</a>
+
+- Universe sticker: <a href="251 Free planet Stickers for download in SVG, PNG formats | Flaticon" title="planet stickers">Planet stickers created by Stickers - Flaticon</a>
+
+- welcome sticker: <a href="321 Free space Stickers for download in SVG, PNG formats | Flaticon" title="space stickers">Space stickers created by Stickers - Flaticon</a>
+
+- Moon & planets: https://sketchfab.com/minecraftnorge
+- Hubble: https://solarsystem.nasa.gov/resources/2383/hubble-space-telescope-3d-model/
+- Rover:https://solarsystem.nasa.gov/resources/2398/curiosity-3d-model/
+
 
 
 [VSCode-url]: https://code.visualstudio.com/
-[VSCode]: https://img.shields.io/badge/Programming-VSCode-blue
+[VSCode]: https://img.shields.io/badge/IDE-VS%20Code-blue
 [Android-url]: https://developer.android.com/studio
 [Android]: https://img.shields.io/badge/Emulation-Android%20Studio-brightgreen
 [DART-url]: https://dart.dev/
-[DART]: https://img.shields.io/badge/Code-DART-blue
+[DART]: https://img.shields.io/badge/Programming-Dart-blue
 [Flutter-url]: https://flutter.dev/
-[Flutter]: https://img.shields.io/badge/Implementation-Flutter-9cf
+[Flutter]: https://img.shields.io/badge/UI-Flutter-blue
 [ar_flutter-url]: https://pub.dev/packages/ar_flutter_plugin
-[ar_flutter]: https://img.shields.io/badge/Implementation-ar__flutter__plugin-9cf
+[ar_flutter]: https://img.shields.io/badge/AR-ar__flutter__plugin-orange
 [Insmonia-url]: https://insomnia.rest/
 [Insomnia]: https://img.shields.io/badge/API%20testing-Insomnia-blueviolet
+[Three-JS]:https://img.shields.io/badge/3D-Three%20JS-yellow
+[Three-JS-url]:https://threejs.org/
+[GitHub]:https://img.shields.io/badge/Models%20Storage-GitHub-lightgrey
+[Github-url]: https://github.com/
 
 [StarMap-url]: https://docs.astronomyapi.com/endpoints/studio/star-chart
 [StarMap]: https://img.shields.io/badge/StarMap-AstronomyAPI-black
