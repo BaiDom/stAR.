@@ -158,7 +158,7 @@ class _HomeScreenState extends State<StarAPI> {
                   margin: const EdgeInsets.all(20),
                   padding: const EdgeInsets.all(10),
                   child: Text(
-                    "Scanning the skies for your star map...  🌟 🌟 🌟",
+                    "We are scanning the skies to find a star map based on your current location...🌃🌉🌌",
                     style: TextStyle(
                       fontSize: 25,
                       fontFamily: "MartianMono",
@@ -204,18 +204,21 @@ class _HomeScreenState extends State<StarAPI> {
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 20, 8, 0),
-                child: Text(
-                  "The Constellation of Aquarius",
-                  style: TextStyle(
-                    fontFamily: "MartianMono",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
+                child: Visibility(
+                  visible: _isVisible,
+                  child: Text(
+                    "The Constellation of Aquarius",
+                    style: TextStyle(
+                      fontFamily: "MartianMono",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
               Container(
-                margin: EdgeInsets.fromLTRB(10, 30, 10, 15),
+                margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
                 child: GestureDetector(
                   onDoubleTapDown: (details) => tapDownDetails = details,
                   onDoubleTap: () {
@@ -249,7 +252,21 @@ class _HomeScreenState extends State<StarAPI> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+                padding: const EdgeInsets.fromLTRB(8, 4, 8, 0),
+                child: Visibility(
+                  visible: _isVisible,
+                  child: Text(
+                    '(Double tap to zoom)',
+                    style: TextStyle(
+                      fontFamily: "MartianMono",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 8,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: Visibility(
                   visible: _isVisible,
                   child: RichText(
@@ -285,7 +302,7 @@ class _HomeScreenState extends State<StarAPI> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
+                padding: const EdgeInsets.fromLTRB(8, 5, 8, 8),
                 child: Visibility(
                   visible: _isVisible,
                   child: ElevatedButton.icon(
