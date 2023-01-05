@@ -232,7 +232,7 @@ class _AugRealityState extends State<AugReality> {
 
     this.arSessionManager.onInitialize(
           showFeaturePoints: false,
-          showPlanes: true,
+          showPlanes: false,
           customPlaneTexturePath: "Images/triangle.png",
           showWorldOrigin: false,
           handlePans: false,
