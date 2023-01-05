@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.all(10),
                   child: Container(
                     child: Text(
-                      "Scanning the skies for your moon phase... 🌖 🌗 🌘 🌑 ",
+                      "We are scanning the skies for your moon phase... 🌖 🌗 🌘",
                       style: TextStyle(fontSize: 25, fontFamily: "MartianMono"),
                     ),
                   ),
@@ -175,10 +175,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   child: Image.network(imageUrl!,
-                      height: 500, width: 375, fit: BoxFit.cover),
+                      height: 460, width: 375, fit: BoxFit.cover),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 35, 10, 20),
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 7.5),
                   child: RichText(
                     text: TextSpan(
                       children: const [

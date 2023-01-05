@@ -20,7 +20,7 @@ class IntroSliderPageState extends State<IntroSliderPage> {
     slides.add(
       Slide(
         title: "Welcome!",
-        description: "Hey there Space Cadet! Ready to explore the Cosmos?",
+        description: "Are you ready to explore the Cosmos?",
         pathImage: "assets/images/space.png",
       ),
     );

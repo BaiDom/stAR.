@@ -27,13 +27,13 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(8, 12, 8, 12),
+                padding: const EdgeInsets.fromLTRB(8, 12, 8, 0),
                 child: Text(
                   "Explore the Universe in AR with stAR.",
                   style: TextStyle(
                     fontFamily: "MartianMono",
                     fontWeight: FontWeight.bold,
-                    fontSize: 25,
+                    fontSize: 20,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -43,12 +43,13 @@ class HomePage extends StatelessWidget {
                 child: Image.asset("assets/images/galaxy.png"),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 4),
                 child: Text(
                   "Click the button below to see an awesome new astronomy picture every day!",
                   style: TextStyle(
                       fontFamily: "MartianMono",
                       fontWeight: FontWeight.bold,
+                      fontSize: 12,
                       color: Colors.amber),
                   textAlign: TextAlign.center,
                 ),
@@ -71,7 +72,7 @@ class HomePage extends StatelessWidget {
               ),
               // Row(children: const [Text(""), Spacer(), Text("")]),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                 child: Text("-NAVIGATION-",
                     style: TextStyle(
                         fontFamily: "MartianMono",
@@ -79,7 +80,7 @@ class HomePage extends StatelessWidget {
                         color: Colors.amber)),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(8, 7.0, 4, 0),
+                padding: const EdgeInsets.fromLTRB(8, 5, 4, 0),
                 child: RichText(
                   text: TextSpan(
                     children: const [
@@ -107,7 +108,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(8, 7.0, 4, 0),
+                padding: const EdgeInsets.fromLTRB(8, 5, 4, 0),
                 child: RichText(
                   text: TextSpan(
                     children: const [
@@ -135,7 +136,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(8, 7.0, 4, 0),
+                padding: const EdgeInsets.fromLTRB(8, 5, 4, 0),
                 child: RichText(
                   text: TextSpan(
                     children: const [
@@ -164,9 +165,9 @@ class HomePage extends StatelessWidget {
                   // textAlign: TextAlign.center,
                 ),
               ),
-              Row(children: const [Text(""), Spacer(), Text("")]),
+
               Padding(
-                padding: const EdgeInsets.fromLTRB(8, 20, 8, 8),
+                padding: const EdgeInsets.fromLTRB(8, 6, 8, 0),
                 child: ElevatedButton.icon(
                     onPressed: () {
                       _showSimpleModalDialog(context);
@@ -198,7 +199,7 @@ _showSimpleModalDialog(context) {
               borderRadius: BorderRadius.circular(20.0),
               side: BorderSide(color: Colors.amber)),
           child: Container(
-            constraints: BoxConstraints(maxHeight: 200),
+            constraints: BoxConstraints(maxHeight: 220),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
@@ -209,7 +210,7 @@ _showSimpleModalDialog(context) {
                       children: const [
                         TextSpan(
                           text:
-                              "Stars shine because they are hot balls of glowing plasma, held together by their own gravity, nuclear fusion is going on inside them and generating light.",
+                              "Stars shine because they are hot balls of glowing plasma, held together by their own gravity. Nuclear fusion is going on inside them, generating light.",
                           style: TextStyle(
                               fontFamily: "MartianMono",
                               fontWeight: FontWeight.bold,
