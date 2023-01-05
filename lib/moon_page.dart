@@ -175,10 +175,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   child: Image.network(imageUrl!,
-                      height: 400, width: 375, fit: BoxFit.cover),
+                      height: 460, width: 375, fit: BoxFit.cover),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 35, 10, 20),
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 7.5),
                   child: RichText(
                     text: TextSpan(
                       children: const [
