@@ -39,6 +39,10 @@ class _AugRealityState extends State<AugReality> {
   ARNode? webObjectNode2;
   ARNode? webObjectNode3;
   ARNode? webObjectNode4;
+  ARNode? webObjectNode5;
+  ARNode? webObjectNode6;
+  ARNode? webObjectNode7;
+  ARNode? webObjectNode8;
 
   List<ARAnchor> anchors = [];
   List<ARNode> nodes = [];
@@ -85,11 +89,23 @@ class _AugRealityState extends State<AugReality> {
               children: [
                 ElevatedButton.icon(
                   icon: Icon(Icons.help),
-                  label: Text('Instructions'),
+                  label: Text(
+                    'Instructions',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: "MartianMono",
+                        fontWeight: FontWeight.bold),
+                  ),
                   onPressed: () => showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
-                      title: const Text('AR Instructions'),
+                      title: const Text(
+                        'AR Instructions',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: "MartianMono",
+                            fontWeight: FontWeight.bold),
+                      ),
                       content: Wrap(children: [
                         Text(
                             'Please pan your camera around until planes (flat surfaces) have been detected around you. These are indicated by dotted fields.\n\nUse the right-hand menu to add 3D models to the scene. Some models will be placed for you. Others can be placed by tapping on the planes.\n\nTo rotate, tap the placed model - you will see a selection circle. Then press both thumbs (or two fingers) to the screen and swirl them clockwise or anti-clockwise.'),
@@ -98,7 +114,9 @@ class _AugRealityState extends State<AugReality> {
                       actions: <Widget>[
                         TextButton(
                           onPressed: () => Navigator.pop(context, 'OK'),
-                          child: const Text('OK'),
+                          child: const Text(
+                            'OK',
+                          ),
                         ),
                       ],
                     ),
@@ -106,7 +124,13 @@ class _AugRealityState extends State<AugReality> {
                 ),
                 ElevatedButton.icon(
                   icon: Icon(Icons.menu),
-                  label: Text('AR menu'),
+                  label: Text(
+                    'AR menu',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: "MartianMono",
+                        fontWeight: FontWeight.bold),
+                  ),
                   onPressed: _openEndDrawer,
                 ),
               ],
@@ -122,10 +146,11 @@ class _AugRealityState extends State<AugReality> {
               decoration: BoxDecoration(
                 color: Colors.amber,
               ),
-              child: Text('Add models',
+              child: Text('Add 3D models to your scene.',
                   style: TextStyle(
                       color: Colors.black,
                       fontFamily: "MartianMono",
+                      fontSize: 24.0,
                       fontWeight: FontWeight.bold)),
             ),
             ListTile(
@@ -162,6 +187,27 @@ class _AugRealityState extends State<AugReality> {
             ),
             ListTile(
               leading: IconButton(
+                icon: Icon(Icons.add_circle),
+                onPressed: () => addMars(),
+              ),
+              title: Text('Add Mars'),
+            ),
+            ListTile(
+              leading: IconButton(
+                icon: Icon(Icons.add_circle),
+                onPressed: () => addVenus(),
+              ),
+              title: Text('Add Venus'),
+            ),
+            ListTile(
+              leading: IconButton(
+                icon: Icon(Icons.add_circle),
+                onPressed: () => addJupiter(),
+              ),
+              title: Text('Add Jupiter'),
+            ),
+            ListTile(
+              leading: IconButton(
                 icon: Icon(Icons.layers_clear_outlined),
                 onPressed: () => onRemoveEverything(),
               ),
@@ -192,13 +238,12 @@ class _AugRealityState extends State<AugReality> {
         );
     this.arObjectManager.onInitialize();
 
-    this.arSessionManager.onPlaneOrPointTap = onPlaneOrPointTapped;
+    // this.arSessionManager.onPlaneOrPointTap = onPlaneOrPointTapped;
     this.arObjectManager.onRotationStart = onRotationStarted;
     this.arObjectManager.onRotationChange = onRotationChanged;
     this.arObjectManager.onRotationEnd = onRotationEnded;
   }
 
-// places moon model near world origin
   Future<void> addMoon() async {
     if (webObjectNode != null) {
       _closeEndDrawer();
@@ -218,15 +263,14 @@ class _AugRealityState extends State<AugReality> {
     var newNode = ARNode(
         type: NodeType.webGLB,
         uri:
-            "https://github.com/captainread/test-assets/blob/main/Moon_1_3474.glb?raw=true",
+            "https://github.com/captainread/test-assets/blob/main/the_moon_sharp.glb?raw=true",
         position: Vector3(0.0, 0.0, -0.2),
-        scale: Vector3(0.15, 0.15, 0.15));
+        scale: Vector3(0.2, 0.2, 0.2));
     bool? didAddWebNode = await arObjectManager.addNode(newNode);
     webObjectNode = (didAddWebNode!) ? newNode : null;
     _closeEndDrawer();
   }
 
-// places hubble telescope model near world origin
   Future<void> addHubble() async {
     if (webObjectNode2 != null) {
       _closeEndDrawer();
@@ -254,7 +298,6 @@ class _AugRealityState extends State<AugReality> {
     _closeEndDrawer();
   }
 
-  // places earth model near world origin
   Future<void> addEarth() async {
     if (webObjectNode3 != null) {
       _closeEndDrawer();
@@ -282,7 +325,6 @@ class _AugRealityState extends State<AugReality> {
     _closeEndDrawer();
   }
 
-  // Places star chart model
   Future<void> addStarsChart() async {
     if (webObjectNode4 != null) {
       _closeEndDrawer();
@@ -310,36 +352,117 @@ class _AugRealityState extends State<AugReality> {
     _closeEndDrawer();
   }
 
-// handles placing earth on plane where tapped - not sure if we want this feature
-  Future<void> onPlaneOrPointTapped(
-      List<ARHitTestResult> hitTestResults) async {
-    var singleHitTestResult = hitTestResults.firstWhere(
-        (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
-    if (singleHitTestResult != null) {
-      var newAnchor =
-          ARPlaneAnchor(transformation: singleHitTestResult.worldTransform);
-      bool? didAddAnchor = await this.arAnchorManager!.addAnchor(newAnchor);
-      if (didAddAnchor!) {
-        this.anchors.add(newAnchor);
-        var newNode = ARNode(
-            type: NodeType.webGLB,
-            uri:
-                "https://github.com/captainread/test-assets/blob/main/Earth4k.glb?raw=true",
-            scale: Vector3(0.3, 0.3, 0.3),
-            position: Vector3(0.0, 0.0, 0.0),
-            rotation: Vector4(1.0, 0.0, 0.0, 0.0));
-        bool? didAddNodeToAnchor =
-            await this.arObjectManager.addNode(newNode, planeAnchor: newAnchor);
-        if (didAddNodeToAnchor!) {
-          this.nodes.add(newNode);
-        } else {
-          this.arSessionManager.onError("Adding Node to Anchor failed");
-        }
-      } else {
-        this.arSessionManager.onError("Adding Anchor failed");
-      }
+  Future<void> addMars() async {
+    if (webObjectNode5 != null) {
+      _closeEndDrawer();
     }
+    if (webObjectNode != null) {
+      arObjectManager.removeNode(webObjectNode!);
+      webObjectNode = null;
+    }
+    if (webObjectNode2 != null) {
+      arObjectManager.removeNode(webObjectNode2!);
+      webObjectNode2 = null;
+    }
+    if (webObjectNode3 != null) {
+      arObjectManager.removeNode(webObjectNode3!);
+      webObjectNode3 = null;
+    }
+    var newNode = ARNode(
+        type: NodeType.webGLB,
+        uri:
+            "https://github.com/captainread/test-assets/blob/main/mars.glb?raw=true",
+        position: Vector3(0.0, 0.0, -0.2),
+        scale: Vector3(0.2, 0.2, 0.2));
+    bool? didAddWebNode = await arObjectManager.addNode(newNode);
+    webObjectNode = (didAddWebNode!) ? newNode : null;
+    _closeEndDrawer();
   }
+
+  Future<void> addVenus() async {
+    if (webObjectNode5 != null) {
+      _closeEndDrawer();
+    }
+    if (webObjectNode != null) {
+      arObjectManager.removeNode(webObjectNode!);
+      webObjectNode = null;
+    }
+    if (webObjectNode2 != null) {
+      arObjectManager.removeNode(webObjectNode2!);
+      webObjectNode2 = null;
+    }
+    if (webObjectNode3 != null) {
+      arObjectManager.removeNode(webObjectNode3!);
+      webObjectNode3 = null;
+    }
+    var newNode = ARNode(
+        type: NodeType.webGLB,
+        uri:
+            "https://github.com/captainread/test-assets/blob/main/venus.glb?raw=true",
+        position: Vector3(0.0, 0.0, -0.2),
+        scale: Vector3(0.2, 0.2, 0.2));
+    bool? didAddWebNode = await arObjectManager.addNode(newNode);
+    webObjectNode = (didAddWebNode!) ? newNode : null;
+    _closeEndDrawer();
+  }
+
+  Future<void> addJupiter() async {
+    if (webObjectNode5 != null) {
+      _closeEndDrawer();
+    }
+    if (webObjectNode != null) {
+      arObjectManager.removeNode(webObjectNode!);
+      webObjectNode = null;
+    }
+    if (webObjectNode2 != null) {
+      arObjectManager.removeNode(webObjectNode2!);
+      webObjectNode2 = null;
+    }
+    if (webObjectNode3 != null) {
+      arObjectManager.removeNode(webObjectNode3!);
+      webObjectNode3 = null;
+    }
+    var newNode = ARNode(
+        type: NodeType.webGLB,
+        uri:
+            "https://github.com/captainread/test-assets/blob/main/jupiter.glb?raw=true",
+        position: Vector3(0.0, 0.0, -0.2),
+        scale: Vector3(0.2, 0.2, 0.2));
+    bool? didAddWebNode = await arObjectManager.addNode(newNode);
+    webObjectNode = (didAddWebNode!) ? newNode : null;
+    _closeEndDrawer();
+  }
+
+// handles placing earth on plane where tapped - not sure if we want this feature
+  // Future<void> onPlaneOrPointTapped(
+  //     List<ARHitTestResult> hitTestResults) async {
+  //   var singleHitTestResult = hitTestResults.firstWhere(
+  //       (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
+  //   if (singleHitTestResult != null) {
+  //     var newAnchor =
+  //         ARPlaneAnchor(transformation: singleHitTestResult.worldTransform);
+  //     bool? didAddAnchor = await this.arAnchorManager!.addAnchor(newAnchor);
+  //     if (didAddAnchor!) {
+  //       this.anchors.add(newAnchor);
+  //       var newNode = ARNode(
+  //           type: NodeType.webGLB,
+  //           uri:
+  //               "https://github.com/captainread/test-assets/blob/main/Earth4k.glb?raw=true",
+  //           scale: Vector3(0.3, 0.3, 0.3),
+  //           position: Vector3(0.0, 0.0, 0.0),
+  //           rotation: Vector4(1.0, 0.0, 0.0, 0.0));
+  //       bool? didAddNodeToAnchor =
+  //           await this.arObjectManager.addNode(newNode, planeAnchor: newAnchor);
+  //       if (didAddNodeToAnchor!) {
+  //         this.nodes.add(newNode);
+  //       } else {
+  //         this.arSessionManager.onError("Adding Node to Anchor failed");
+  //       }
+  //     } else {
+  //       this.arSessionManager.onError("Adding Anchor failed");
+  //     }
+  //   }
+  // }
 
 // removes all models
   Future<void> onRemoveEverything() async {
