@@ -11,16 +11,24 @@ StAR is an Android app that leverages Augmented Reality to let users explore and
 + See the astronomy picture of the day with some infomation about it.
 
 ## Getting Started:
-+ Install Flutter to VSCode
-+ Install Android Studio (for computer emulation)
-+ Run this command in your terminal
+### Prerequisites
 
-        flutter pub add get
-This will add
++ Install Flutter.
++ Add Flutter extension  to VSCode
++ Create new device emulator 
 
-        get: ^4.6.5
+### Installation 
+1. Clone the repo
 
-to your `dependencies` in `pubspec.yaml`.
+        git clone https://github.com/BaiDom/TBD-project.git
+
+        
+
+2. Run flutter pub get in the terminal
+
+        flutter pub get
+
+This will install the `dependencies` in `pubspec.yaml`.
 
 ## After being set up:
 + Choose the device that will be emulated 
