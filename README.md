@@ -23,7 +23,7 @@ This will add
 to your `dependencies` in `pubspec.yaml`.
 
 ## After being set up:
-+ Choose what device that will be emulated 
++ Choose the device that will be emulated 
 + Run this command in your terminal to start the emulation
 
         flutter run
